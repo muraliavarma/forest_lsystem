@@ -33,19 +33,37 @@
 		projectionMatrix: mat4.create(),
 		lookAtMatrix: mat4.create(),
 
-		doPan: function(ox, oy, olx, oly, dx, dy) {
-			this.pos[0] = ox + dx;
-			this.pos[1] = oy - dy;
-			this.look[0] = olx + dx;
-			this.look[1] = oly - dy;
+		doPan: function(oPos, oLook, dx, dy) {
+			this.pos[0] = oPos[0] + dx;
+			this.pos[1] = oPos[1] - dy;
+			this.look[0] = oLook[0] + dx;
+			this.look[1] = oLook[1] - dy;
 			this.calcLookAtMatrix();
 		},
 
-		doRotate: function(ox, oy, dx, dy) {
-			this.pos[0] = ox + dx;
-			this.pos[1] = oy - dy;
+		doRotate: function(oPos, oLook, xTheta, yTheta) {
+			// console.log(xTheta, this.pos, this.look);
+			xTheta *= Math.PI / 180;
+			yTheta *= Math.PI / 180;
+			var r = vec3.dist(oPos, oLook);
+
+			this.pos[0] = oPos[0] + oLook[0] + r * Math.sin(xTheta);
+			// this.pos[1] = oly + r * Math.sin(yTheta);
+			this.pos[2] = oPos[2] + oLook[2] + r * Math.cos(xTheta);
+			// this.pos[1] = oy - dy;
 			this.calcLookAtMatrix();
 		},
+
+		// doRotate: function(olx, oly, olz, r, xTheta, yTheta) {
+		// 	console.log(xTheta, this.pos, this.look);
+		// 	xTheta *= Math.PI / 180;
+		// 	yTheta *= Math.PI / 180;
+		// 	this.pos[0] = olx + r * Math.sin(xTheta);
+		// 	this.pos[1] = oly + r * Math.sin(yTheta);
+		// 	this.pos[2] = olz + r * Math.cos(xTheta);
+		// 	// this.pos[1] = oy - dy;
+		// 	this.calcLookAtMatrix();
+		// },
 
 		doZoom: function(val) {
 			this.zoom += val;

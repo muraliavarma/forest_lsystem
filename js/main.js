@@ -31,18 +31,25 @@ function onLoad() {
 		var origY = event.clientY;
 		var origPosX = camera.pos[0];
 		var origPosY = camera.pos[1];
+		var origPosZ = camera.pos[2];
 		var origLookX = camera.look[0];
 		var origLookY = camera.look[1];
+		var origLookZ = camera.look[2];
+		var radius = vec3.dist(camera.pos, camera.look);
+
+		var oPos = vec3.clone(camera.pos);
+		var oLook = vec3.clone(camera.look);
+
 		canvas.onmousemove = function() {
 			var diffX = event.clientX - origX;
 			var diffY = event.clientY - origY;
 
-
 			if (isRotate) {
-				camera.doRotate(origPosX, origPosY, diffX, diffY);
+				// camera.doRotate(origLookX, origLookY, origLookZ, radius, diffX, diffY);
+				camera.doRotate(oPos, oLook, diffX, diffY);
 			}
 			else {
-				camera.doPan(origPosX, origPosY, origLookX, origLookY, diffX, diffY);
+				camera.doPan(oPos, oLook, diffX, diffY);
 			}
 
 			scene.draw();
