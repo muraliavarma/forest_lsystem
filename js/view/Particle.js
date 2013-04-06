@@ -17,12 +17,17 @@
 		// 	]);
 		// },
 		draw: function (ctx, camera) {
-			ctx.fillStyle = 'rgba(100, 100, 100, 1)';
 			var screenVector = vec3.create();
-			vec3.transformMat4(screenVector, this.pos, camera.projectionMatrix);
-			vec3.transformMat4(screenVector, screenVector, camera.lookAtMatrix);
+			vec3.transformMat4(screenVector, this.pos, camera.lookAtMatrix);
+			vec3.transformMat4(screenVector, screenVector, camera.projectionMatrix);
 			vec3.add(screenVector, screenVector, vec3.clone([ctx.canvas.width / 2, ctx.canvas.height / 2, 0]));
-			console.log(screenVector);
+			// console.log(screenVector);
+			if (screenVector[2] < 0) {
+				ctx.fillStyle = 'rgba(100, 0, 0, 1)';
+			}
+			else {
+				ctx.fillStyle = 'rgba(0, 0, ' + parseInt(screenVector[2]) * 10 + ', 1)';
+			}
 			ctx.fillRect(screenVector[0], screenVector[1], 5, 5);
 		}
 	}
