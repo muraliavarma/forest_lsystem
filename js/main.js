@@ -9,10 +9,10 @@ function onLoad() {
 	// ctx.fillStyle = 'rgba(255, 255, 255, 1)';
 	// ctx.fillRect(ctx.canvas.width / 2, ctx.canvas.height / 2, 5, 5);
 
-	var particle = new Particle([20, 0, 0]);
-	var particle2 = new Particle([-20, 0, 0]);
-	var particle3 = new Particle([-20, 30, 0]);
-	var particle4 = new Particle([20, 30, 0]);
+	var particle = new Particle([20, 0, 10]);
+	var particle2 = new Particle([-20, 0, 50]);
+	var particle3 = new Particle([-20, 30, 20]);
+	var particle4 = new Particle([20, 30, 20]);
 
 	var scene = new Scene();
 	var camera = new Camera();
@@ -35,7 +35,7 @@ function onLoad() {
 		var origLookX = camera.look[0];
 		var origLookY = camera.look[1];
 		var origLookZ = camera.look[2];
-		var radius = vec3.dist(camera.pos, camera.look);
+		// var radius = vec3.dist(camera.pos, camera.look);
 
 		var oPos = vec3.clone(camera.pos);
 		var oLook = vec3.clone(camera.look);
@@ -67,7 +67,6 @@ function onLoad() {
 	}
 
 	document.onkeypress = function(e) {
-		console.log(e.which);
 		if (e.which == 114 || e.which == 82) {
 			//r key or R key
 			isRotate = !isRotate;
