@@ -14,16 +14,8 @@ function onLoad() {
 	renderer.setSize(500, 500);
 	container.appendChild(renderer.domElement);
 
-
 	controls = new THREE.TrackballControls(camera);
-	controls.target.set(0, 0, 0);
-	// controls.rotateSpeed = 1.0;
 	controls.zoomSpeed = 0.1;
-	// controls.panSpeed = 2;
-	// controls.noZoom = false;
-	// controls.noPan = false;
-	// controls.staticMoving = true;
-	// controls.dynamicDampingFactor = 0.3;
 	controls.addEventListener('change', render);
 
 
