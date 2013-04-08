@@ -1,76 +1,51 @@
-var isRotate = false;
-
 function onLoad() {
-	var canvas = document.getElementById('turtleCanvas');
-	var ctx = canvas.getContext('2d');
-	// ctx.fillStyle = "rgba(0, 0, 255, .8)";
-	// ctx.fillRect(10, 10, 480, 100);
-	//draw the center of the canvas
-	// ctx.fillStyle = 'rgba(255, 255, 255, 1)';
-	// ctx.fillRect(ctx.canvas.width / 2, ctx.canvas.height / 2, 5, 5);
 
-	var particle = new Particle([20, 0, 10]);
-	var particle2 = new Particle([-20, 0, 50]);
-	var particle3 = new Particle([-20, 30, 20]);
-	var particle4 = new Particle([20, 30, 20]);
+	scene = new THREE.Scene();
+	var fov = 90;
+	var near = 1;
+	var far = 1000;
 
-	var scene = new Scene();
-	var camera = new Camera();
-	scene.setCamera(camera);
-	scene.setCtx(ctx);
-	scene.setParticles([particle, particle2, particle3, particle4]);
-	scene.draw();
+	camera = new THREE.PerspectiveCamera(fov, 1, near, far);
+	// camera.lookAt(new THREE.Vector3(0, 0, -100));
+	camera.position = new THREE.Vector3(0, 0, 100);
 
-	// particle.draw(ctx, camera);
-	// particle2.draw(ctx, camera);
-	// particle3.draw(ctx, camera);
-	// particle4.draw(ctx, camera);
+	var container = document.getElementById('canvasContainer');
+	renderer = new THREE.CanvasRenderer();
+	renderer.setSize(500, 500);
+	container.appendChild(renderer.domElement);
 
-	canvas.onmousedown = function() {
-		var origX = event.clientX;
-		var origY = event.clientY;
-		var origPosX = camera.pos[0];
-		var origPosY = camera.pos[1];
-		var origPosZ = camera.pos[2];
-		var origLookX = camera.look[0];
-		var origLookY = camera.look[1];
-		var origLookZ = camera.look[2];
-		// var radius = vec3.dist(camera.pos, camera.look);
 
-		var oPos = vec3.clone(camera.pos);
-		var oLook = vec3.clone(camera.look);
+	controls = new THREE.TrackballControls(camera);
+	controls.target.set(0, 0, 0);
+	// controls.rotateSpeed = 1.0;
+	controls.zoomSpeed = 0.1;
+	// controls.panSpeed = 2;
+	// controls.noZoom = false;
+	// controls.noPan = false;
+	// controls.staticMoving = true;
+	// controls.dynamicDampingFactor = 0.3;
+	controls.addEventListener('change', render);
 
-		canvas.onmousemove = function() {
-			var diffX = event.clientX - origX;
-			var diffY = event.clientY - origY;
 
-			if (isRotate) {
-				// camera.doRotate(origLookX, origLookY, origLookZ, radius, diffX, diffY);
-				camera.doRotate(oPos, oLook, diffX, diffY);
-			}
-			else {
-				camera.doPan(oPos, oLook, diffX, diffY);
-			}
+	var material = new THREE.LineBasicMaterial({
+		color: 0xff00ff,
+	});
+	var geometry = new THREE.Geometry();
+	geometry.vertices.push(new THREE.Vector3(-10, 0, -10));
+	geometry.vertices.push(new THREE.Vector3(0, 10, -10));
+	geometry.vertices.push(new THREE.Vector3(30, 0, -10));
 
-			scene.draw();
-		}
-	}
+	var line = new THREE.Line(geometry, material);
+	scene.add(line);
+	animate();
+}
 
-	canvas.onmouseup = function() {
-		canvas.onmousemove = null;
-	}
+function render() {
+	renderer.render(scene, camera);
+}
 
-	canvas.onmousewheel = function(e) {
-		e.preventDefault();
-		camera.doZoom(-e.wheelDelta/1000);
-		scene.draw()
-	}
-
-	document.onkeypress = function(e) {
-		if (e.which == 114 || e.which == 82) {
-			//r key or R key
-			isRotate = !isRotate;
-		}
-	}
-
+function animate() {
+	controls.update();
+	requestAnimationFrame(animate);
+	render();
 }

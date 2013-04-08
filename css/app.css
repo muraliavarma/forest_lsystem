@@ -4,3 +4,6 @@ body {
 	background-color: black;
 	color: grey;
 }
+canvas {
+	border: dotted;
+}
