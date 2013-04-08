@@ -14,7 +14,7 @@ function onLoad() {
 	container.appendChild(renderer.domElement);
 
 	controls = new THREE.TrackballControls(camera);
-	controls.zoomSpeed = 1;
+	controls.zoomSpeed = 0.1;
 	controls.addEventListener('change', render);
 
 	turtle = new Turtle({
@@ -29,7 +29,8 @@ function onLoad() {
 	// / represents head turn, + represents up turn, & represents right turn
 	// cmds = ['f 20', '+ 90', 'f 10', '/ 45', 'f 10', '+ -45', 'f 10'];
 	// cmds = ['f 20', '/ 90', '+ 90', 'f 10', '+ -90', 'f 10'];
-	cmds = ['f 20', '& 90', '+ 90', 'f 10', '+ -90', 'f 10'];
+	// cmds = ['f 20', '& 90', '+ 90', 'f 10', '+ -90', 'f 10'];
+	cmds = ['f 20', '[', '+ 45', 'f 20', ']', 'f 20'];
 	turtle.run(cmds);
 
 	// var material = new THREE.LineBasicMaterial({
@@ -42,6 +43,10 @@ function onLoad() {
 
 	// var line = new THREE.Line(geometry, material);
 	// scene.add(line);
+
+	container.onmousewheel = function() {
+		controls.update();
+	}
 
 	container.onmousedown = function() {
 		container.onmousemove = function() {

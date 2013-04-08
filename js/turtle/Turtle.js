@@ -10,6 +10,7 @@
 		pos: null,
 		dir: null,
 		pen: null,
+		_stack: [],
 		run: function(cmds) {
 			for (var i = 0; i < cmds.length; i++) {
 				var cmd = cmds[i];
@@ -33,6 +34,19 @@
 					var right = this.dir.clone().cross(this.up);
 					this.dir.applyMatrix4(new THREE.Matrix4().makeRotationAxis(right, rad));
 					this.up.applyMatrix4(new THREE.Matrix4().makeRotationAxis(right, rad));
+				}
+				else if (cmd.indexOf('[') == 0) {
+					this._stack.push({
+						pos: this.pos.clone(),
+						dir: this.dir.clone(),
+						up: this.up.clone()
+					})
+				}
+				else if (cmd.indexOf(']') == 0) {
+					var top = this._stack.pop();
+					this.pos = top.pos;
+					this.dir = top.dir;
+					this.up = top.up;
 				}
 			}
 		},
