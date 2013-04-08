@@ -2,6 +2,7 @@
 	Turtle = function(opts) {
 		this.pos = opts.pos;
 		this.dir = opts.dir;
+		this.up = opts.up;
 		this.pen = opts.pen;
 	};
 
@@ -12,22 +13,31 @@
 		run: function(cmds) {
 			for (var i = 0; i < cmds.length; i++) {
 				var cmd = cmds[i];
-				if (cmd.indexOf('f') >= 0) {
+				if (cmd.indexOf('f') == 0) {
 					var oldPos = this.pos.clone();
 					this.pos.add(this.dir.clone().multiplyScalar(parseInt(cmd.substr(2))));
 					this.draw(oldPos, this.pos.clone());
 				}
-				else if (cmd.indexOf('r') >= 0) {
+				else if (cmd.indexOf('+') == 0) {
 					var rad = parseFloat(cmd.substr(2) * Math.PI / 180);
-					this.dir.applyMatrix4(new THREE.Matrix4().makeRotationAxis(new THREE.Vector3(0, 0, -1), rad));
+					this.dir.applyMatrix4(new THREE.Matrix4().makeRotationAxis(this.up, rad));
+					this.up.applyMatrix4(new THREE.Matrix4().makeRotationAxis(this.up, rad));
 				}
-				else if (cmd.indexOf('l') >= 0) {
-					var rad = -1 * parseFloat(cmd.substr(2) * Math.PI / 180);
-					this.dir.applyMatrix4(new THREE.Matrix4().makeRotationAxis(new THREE.Vector3(0, 0, -1), rad));
+				else if (cmd.indexOf('/') == 0) {
+					var rad = parseFloat(cmd.substr(2) * Math.PI / 180);
+					this.dir.applyMatrix4(new THREE.Matrix4().makeRotationAxis(this.dir, rad));
+					this.up.applyMatrix4(new THREE.Matrix4().makeRotationAxis(this.dir, rad));
+				}
+				else if (cmd.indexOf('&') == 0) {
+					var rad = parseFloat(cmd.substr(2) * Math.PI / 180);
+					var right = this.dir.clone().cross(this.up);
+					this.dir.applyMatrix4(new THREE.Matrix4().makeRotationAxis(right, rad));
+					this.up.applyMatrix4(new THREE.Matrix4().makeRotationAxis(right, rad));
 				}
 			}
 		},
-		draw: function(p1, p2) {		
+		draw: function(p1, p2) {	
+			//needs to be optimized. use LinePieces maybe?	
 			var material = new THREE.LineBasicMaterial({
 				color: 0xffffff,
 			});

@@ -14,18 +14,22 @@ function onLoad() {
 	container.appendChild(renderer.domElement);
 
 	controls = new THREE.TrackballControls(camera);
-	controls.zoomSpeed = 0.1;
+	controls.zoomSpeed = 1;
 	controls.addEventListener('change', render);
 
 	turtle = new Turtle({
 		pos: new THREE.Vector3(0, 0, -10),
 		dir: new THREE.Vector3(0, 1, 0),
+		up:  new THREE.Vector3(0, 0, 1),
 		pen: {
 			color: 0xff00ff
 		}
 	});
 
-	cmds = ['f 20', 'r 90', 'f 10', 'l 45', 'f 10'];
+	// / represents head turn, + represents up turn, & represents right turn
+	// cmds = ['f 20', '+ 90', 'f 10', '/ 45', 'f 10', '+ -45', 'f 10'];
+	// cmds = ['f 20', '/ 90', '+ 90', 'f 10', '+ -90', 'f 10'];
+	cmds = ['f 20', '& 90', '+ 90', 'f 10', '+ -90', 'f 10'];
 	turtle.run(cmds);
 
 	// var material = new THREE.LineBasicMaterial({
