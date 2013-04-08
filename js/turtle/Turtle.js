@@ -60,6 +60,11 @@
 			geometry.vertices.push(p2);
 			var line = new THREE.Line(geometry, material);
 			scene.add(line);
+		},
+		reset: function() {
+			this.pos = new THREE.Vector3(0, 0, 0),
+			this.dir = new THREE.Vector3(0, 1, 0),
+			this.up = new THREE.Vector3(0, 0, 1)
 		}
 	};
 
