@@ -17,6 +17,19 @@ function onLoad() {
 	controls.zoomSpeed = 0.1;
 	controls.addEventListener('change', render);
 
+	lsystem = new LSystem({
+		iterations: 2,
+		axiom: 'F-',
+		rules: [{
+			lhs: 'F',
+			rhs: 'FF'
+		},{
+			lhs: '-',
+			rhs: '-F'
+		}]
+	});
+	console.log(lsystem.generate());
+
 	turtle = new Turtle({
 		pos: new THREE.Vector3(0, 0, -10),
 		dir: new THREE.Vector3(0, 1, 0),
