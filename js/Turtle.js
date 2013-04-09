@@ -1,8 +1,9 @@
 (function() {
 	Turtle = function(opts) {
-		this.pos = opts.pos;
-		this.dir = opts.dir;
-		this.up = opts.up;
+		this._opts = opts;
+		this.pos = opts.pos.clone();
+		this.dir = opts.dir.clone();
+		this.up = opts.up.clone();
 		this.pen = opts.pen;
 	};
 
@@ -15,6 +16,7 @@
 			this._cmd = cmd;
 			this._idx = 0;
 			while(this._idx < cmd.length) {
+				// / represents head turn, + represents up turn, & represents right turn
 				switch(cmd[this._idx]) {
 					case 'F':
 						var oldPos = this.pos.clone();
@@ -37,6 +39,9 @@
 						this.dir.applyMatrix4(new THREE.Matrix4().makeRotationAxis(right, rad));
 						this.up.applyMatrix4(new THREE.Matrix4().makeRotationAxis(right, rad));
 						break;
+					case '$':
+						this.up = this.dir.clone().cross(new THREE.Vector3(0, 1, 0).cross(this.dir));
+						break;
 					case '[':
 						this._stack.push({
 							pos: this.pos.clone(),
@@ -51,13 +56,20 @@
 						this.up = top.up;
 						break;
 					case 'A':
-						this.pen.color = 0xffff00;
+						this.pen.color = 0xffffee;
+						this._getParam();
 						break;
 					case 'B':
-						this.pen.color = 0xff00ff;
+						this.pen.color = 0xffeeee;
+						this._getParam();
 						break;
 					case 'C':
-						this.pen.color = 0x00ffff;
+						this.pen.color = 0xeeeeee;
+						this._getParam();
+						break;
+					case 'D':
+						this.pen.color = 0xff0000;
+						this._getParam();
 						break;
 					case '!':
 						this.pen.width = parseFloat(this._getParam());
@@ -69,9 +81,15 @@
 			}
 		},
 		reset: function() {
-			this.pos = new THREE.Vector3(0, 0, 0),
-			this.dir = new THREE.Vector3(0, 1, 0),
-			this.up = new THREE.Vector3(0, 0, 1)
+			this.pos = this._opts.pos.clone();
+			this.dir = this._opts.dir.clone();
+			this.up = this._opts.up.clone();
+			this.pen = this._opts.pen;
+		},
+		clear: function() {
+			this.reset();
+			scene.children = [];
+			render();
 		},
 		_draw: function(p1, p2) {	
 			//needs to be optimized. use LinePieces maybe?	

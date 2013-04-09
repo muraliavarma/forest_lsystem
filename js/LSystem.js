@@ -16,10 +16,19 @@
 		iterations: 1,
 		axiom: null,
 		rules: null,
-		generate: function() {
+		generate: function(turtle) {
 			var numRules = this.rules.length;
 			var axiom = null;
 			var res = this.axiom;
+			var results = [];
+			var idx = 0;
+
+			setInterval(function(){
+				if (results.length > 0 && idx < results.length) {
+					turtle.clear();
+					turtle.run(results[idx++]);
+				}
+			}, 1000);
 
 			for (var i = 0; i < this.iterations; i++) {
 				axiom = res;
@@ -36,6 +45,7 @@
 					}
 					res += this._parametrize(left, paramString);
 				}
+				results.push(res);
 			}
 			return res;
 		},
@@ -68,7 +78,7 @@
 							}
 							var params2 = right.substring(oldIdx, i).split(', ');
 							for (var j in params2) {
-								ret += eval(params2[j]) + ', ';
+								ret += eval(params2[j].replace(/\-/g, '-1*')) + ', ';
 							}
 							ret = ret.substring(0, ret.length - 2) + ')';
 						}
