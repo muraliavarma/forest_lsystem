@@ -34,9 +34,13 @@ function onLoad() {
 	lsystem = new LSystem({
 		iterations: 5,
 		axiom: '!(1)F(20)/(45)A',
+		constants: {
+			d1: 94.74,
+			d2: 132.63
+		},
 		rules: [{
 			lhs: 'A',
-			rhs: '!(1.732)F(5)[&(19)F(5)A]/(95)[&(19)F(5)A]/(133)[&(19)F(5)A]'
+			rhs: '!(1.732)F(5)[&(19)F(5)A]/(d1)[&(19)F(5)A]/(d2)[&(19)F(5)A]'
 		},{
 			lhs: 'F(a)',
 			rhs: 'F(a*1.109)'

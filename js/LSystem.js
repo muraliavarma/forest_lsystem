@@ -6,6 +6,9 @@
 		for (var i = 0; i < opts.rules.length; i++) {
 			var rule = opts.rules[i];
 			this.rules[rule.lhs] = rule.rhs;
+			for (var constant in opts.constants) {
+				this.rules[rule.lhs] = this.rules[rule.lhs].replace(new RegExp(constant, 'g'), opts.constants[constant]);
+			}
 		}
 	};
 
