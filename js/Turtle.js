@@ -18,7 +18,7 @@
 				switch(cmd[this._idx]) {
 					case 'F':
 						var oldPos = this.pos.clone();
-						this.pos.add(this.dir.clone().multiplyScalar(parseInt(this._getParam())));
+						this.pos.add(this.dir.clone().multiplyScalar(parseFloat(this._getParam())));
 						this._draw(oldPos, this.pos.clone());
 						break;
 					case '+':
@@ -50,8 +50,12 @@
 						this.dir = top.dir;
 						this.up = top.up;
 						break;
+					case 'A':
+						this.pen.color = 0xffffff;
+						break;
+
 					default:
-						console.log('Unrecognizable symbol in command!');
+						console.log('Unrecognizable symbol in command: ' + cmd[this._idx]);
 				}
 				this._idx++;
 			}
@@ -64,7 +68,7 @@
 		_draw: function(p1, p2) {	
 			//needs to be optimized. use LinePieces maybe?	
 			var material = new THREE.LineBasicMaterial({
-				color: 0xffffff,
+				color: this.pen.color,
 			});
 			var geometry = new THREE.Geometry();
 			geometry.vertices.push(p1);

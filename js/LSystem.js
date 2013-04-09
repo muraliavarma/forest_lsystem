@@ -38,7 +38,7 @@
 		},
 		_parametrize: function(literal, paramString) {
 			if (!paramString) {
-				return this.rules[literal];
+				return this.rules[literal] || literal;
 			}
 			var params = paramString.split(', ');
 			for (var rule in this.rules) {
@@ -74,6 +74,9 @@
 						}
 					}
 					return ret;
+				}
+				else {
+					return literal + '(' + paramString + ')';
 				}
 			}
 		}
