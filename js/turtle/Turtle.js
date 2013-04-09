@@ -11,46 +11,57 @@
 		dir: null,
 		pen: null,
 		_stack: [],
-		run: function(cmds) {
-			for (var i = 0; i < cmds.length; i++) {
-				var cmd = cmds[i];
-				if (cmd.indexOf('f') == 0) {
-					var oldPos = this.pos.clone();
-					this.pos.add(this.dir.clone().multiplyScalar(parseInt(cmd.substr(2))));
-					this.draw(oldPos, this.pos.clone());
+		run: function(cmd) {
+			this._cmd = cmd;
+			this._idx = 0;
+			while(this._idx < cmd.length) {
+				switch(cmd[this._idx]) {
+					case 'F':
+						var oldPos = this.pos.clone();
+						this.pos.add(this.dir.clone().multiplyScalar(parseInt(this._getParam())));
+						this._draw(oldPos, this.pos.clone());
+						break;
+					case '+':
+						var rad = parseFloat(this._getParam() * Math.PI / 180);
+						this.dir.applyMatrix4(new THREE.Matrix4().makeRotationAxis(this.up, rad));
+						this.up.applyMatrix4(new THREE.Matrix4().makeRotationAxis(this.up, rad));
+						break;
+					case '/':
+						var rad = parseFloat(this._getParam() * Math.PI / 180);
+						this.dir.applyMatrix4(new THREE.Matrix4().makeRotationAxis(this.dir, rad));
+						this.up.applyMatrix4(new THREE.Matrix4().makeRotationAxis(this.dir, rad));
+						break;
+					case '&':
+						var rad = parseFloat(this._getParam() * Math.PI / 180);
+						var right = this.dir.clone().cross(this.up);
+						this.dir.applyMatrix4(new THREE.Matrix4().makeRotationAxis(right, rad));
+						this.up.applyMatrix4(new THREE.Matrix4().makeRotationAxis(right, rad));
+						break;
+					case '[':
+						this._stack.push({
+							pos: this.pos.clone(),
+							dir: this.dir.clone(),
+							up: this.up.clone()
+						})
+						break;
+					case ']':
+						var top = this._stack.pop();
+						this.pos = top.pos;
+						this.dir = top.dir;
+						this.up = top.up;
+						break;
+					default:
+						console.log('Unrecognizable symbol in command!');
 				}
-				else if (cmd.indexOf('+') == 0) {
-					var rad = parseFloat(cmd.substr(2) * Math.PI / 180);
-					this.dir.applyMatrix4(new THREE.Matrix4().makeRotationAxis(this.up, rad));
-					this.up.applyMatrix4(new THREE.Matrix4().makeRotationAxis(this.up, rad));
-				}
-				else if (cmd.indexOf('/') == 0) {
-					var rad = parseFloat(cmd.substr(2) * Math.PI / 180);
-					this.dir.applyMatrix4(new THREE.Matrix4().makeRotationAxis(this.dir, rad));
-					this.up.applyMatrix4(new THREE.Matrix4().makeRotationAxis(this.dir, rad));
-				}
-				else if (cmd.indexOf('&') == 0) {
-					var rad = parseFloat(cmd.substr(2) * Math.PI / 180);
-					var right = this.dir.clone().cross(this.up);
-					this.dir.applyMatrix4(new THREE.Matrix4().makeRotationAxis(right, rad));
-					this.up.applyMatrix4(new THREE.Matrix4().makeRotationAxis(right, rad));
-				}
-				else if (cmd.indexOf('[') == 0) {
-					this._stack.push({
-						pos: this.pos.clone(),
-						dir: this.dir.clone(),
-						up: this.up.clone()
-					})
-				}
-				else if (cmd.indexOf(']') == 0) {
-					var top = this._stack.pop();
-					this.pos = top.pos;
-					this.dir = top.dir;
-					this.up = top.up;
-				}
+				this._idx++;
 			}
 		},
-		draw: function(p1, p2) {	
+		reset: function() {
+			this.pos = new THREE.Vector3(0, 0, 0),
+			this.dir = new THREE.Vector3(0, 1, 0),
+			this.up = new THREE.Vector3(0, 0, 1)
+		},
+		_draw: function(p1, p2) {	
 			//needs to be optimized. use LinePieces maybe?	
 			var material = new THREE.LineBasicMaterial({
 				color: 0xffffff,
@@ -61,10 +72,14 @@
 			var line = new THREE.Line(geometry, material);
 			scene.add(line);
 		},
-		reset: function() {
-			this.pos = new THREE.Vector3(0, 0, 0),
-			this.dir = new THREE.Vector3(0, 1, 0),
-			this.up = new THREE.Vector3(0, 0, 1)
+		_getParam: function() {
+			var val = '';
+			if (this._cmd[++this._idx] == '(') {
+				while (this._cmd[++this._idx] != ')') {
+					val += this._cmd[this._idx];
+				}
+			}
+			return val;
 		}
 	};
 
