@@ -16,15 +16,10 @@
 		generate: function() {
 			var numRules = this.rules.length;
 			var axiom = null;
-			var res = '';
+			var res = this.axiom;
 
 			for (var i = 0; i < this.iterations; i++) {
-				if (i == 0) {
-					axiom = this.axiom;
-				}
-				else {
-					axiom = res;
-				}
+				axiom = res;
 				res = '';
 				for (var j = 0; j < axiom.length; j++) {
 					var left = axiom[j];
