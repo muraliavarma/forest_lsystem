@@ -18,14 +18,14 @@ function onLoad() {
 	controls.addEventListener('change', render);
 
 	lsystem = new LSystem({
-		iterations: 2,
-		axiom: 'F-',
+		iterations: 5,
+		axiom: 'F-(10, 100)',
 		rules: [{
 			lhs: 'F',
-			rhs: 'FF'
+			rhs: 'F-(30, 20)'
 		},{
-			lhs: '-',
-			rhs: '-F'
+			lhs: '-(y, z)',
+			rhs: '-(y+z+10, y*z)F'
 		}]
 	});
 	console.log(lsystem.generate());

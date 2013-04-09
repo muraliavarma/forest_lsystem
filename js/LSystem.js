@@ -21,12 +21,61 @@
 			for (var i = 0; i < this.iterations; i++) {
 				axiom = res;
 				res = '';
-				for (var j = 0; j < axiom.length; j++) {
+				for (var j = 0; j < axiom.length;) {
 					var left = axiom[j];
-					res += this.rules[left];
+					var paramString = '';
+					if (++j < axiom.length && axiom[j] == '(') {
+						//above if condition also increments j, so we don't need to do it in the above for loop
+						while (++j < axiom.length && axiom[j] != ')') {
+							paramString += axiom[j];
+						}
+						j++;	//to move on from the closing paranthesis
+					}
+					res += this._parametrize(left, paramString);
 				}
 			}
 			return res;
+		},
+		_parametrize: function(literal, paramString) {
+			if (!paramString) {
+				return this.rules[literal];
+			}
+			var params = paramString.split(', ');
+			for (var rule in this.rules) {
+				if (rule.indexOf(literal) == 0) {
+					//we have got the rule that we need
+					//now we match parameters in this rule with corresponding value in the axiom (params)
+					var ruleParams = rule.substring(literal.length + 1, rule.length - 1).split(', ');
+					var ruleMatches = {};
+					for (var i = 0; i < params.length; i++) {
+						ruleMatches[ruleParams[i]] = params[i];
+					}
+					var right = this.rules[rule];
+					for (var ruleMatch in ruleMatches) {
+						right = right.replace(new RegExp(ruleMatch, 'g'), ruleMatches[ruleMatch]);	//i sense major performance issue in this regexp creation
+					}
+					//now evaluate the expressions inside the brackets
+					var ret = ''
+					for (var i = 0; i < right.length; i++) {
+						if (right[i] == '(') {
+							ret += '(';
+							var oldIdx = i + 1;
+							while (right[++i] != ')') {
+								//keep incrementing i until the end of the bracket
+							}
+							var params2 = right.substring(oldIdx, i).split(', ');
+							for (var j in params2) {
+								ret += eval(params2[j]) + ', ';
+							}
+							ret = ret.substring(0, ret.length - 2) + ')';
+						}
+						else {
+							ret += right[i];
+						}
+					}
+					return ret;
+				}
+			}
 		}
 	};
 
