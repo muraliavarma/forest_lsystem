@@ -51,9 +51,17 @@
 						this.up = top.up;
 						break;
 					case 'A':
-						this.pen.color = 0xffffff;
+						this.pen.color = 0xffff00;
 						break;
-
+					case 'B':
+						this.pen.color = 0xff00ff;
+						break;
+					case 'C':
+						this.pen.color = 0x00ffff;
+						break;
+					case '!':
+						this.pen.width = parseFloat(this._getParam());
+						break;
 					default:
 						console.log('Unrecognizable symbol in command: ' + cmd[this._idx]);
 				}
@@ -69,6 +77,7 @@
 			//needs to be optimized. use LinePieces maybe?	
 			var material = new THREE.LineBasicMaterial({
 				color: this.pen.color,
+				linewidth: this.pen.width
 			});
 			var geometry = new THREE.Geometry();
 			geometry.vertices.push(p1);

@@ -19,35 +19,42 @@ function onLoad() {
 
 	// lsystem = new LSystem({
 	// 	iterations: 5,
-	// 	axiom: 'F-(10, 100)',
+	// 	axiom: 'F(10)',
 	// 	rules: [{
-	// 		lhs: 'F',
-	// 		rhs: 'F-(30, 20)'
+	// 		lhs: 'F(x)',
+	// 		rhs: 'F(x)+(2)F(x)'
 	// 	},{
-	// 		lhs: '-(y, z)',
-	// 		rhs: '-(y+z+10, y*z)F'
+	// 		lhs: '+(y)',
+	// 		rhs: '+(y*5)'
 	// 	}]
 	// });
+
+
+	//single colored tree
 	lsystem = new LSystem({
-		iterations: 6,
-		axiom: 'F(20)/(45)A',
+		iterations: 5,
+		axiom: '!(1)F(20)/(45)A',
 		rules: [{
 			lhs: 'A',
-			rhs: 'F(5)[&(19)F(5)A]/(95)[&(19)F(5)A]/(133)[&(19)F(5)A]'
+			rhs: '!(1.732)F(5)[&(19)F(5)A]/(95)[&(19)F(5)A]/(133)[&(19)F(5)A]'
 		},{
 			lhs: 'F(a)',
 			rhs: 'F(a*1.109)'
+		},{
+			lhs: '!(w)',
+			rhs: '!(1.732*w)'
 		}]
 	});
 	var cmd = lsystem.generate();
-	// console.log(cmd);
+	console.log(cmd);
 
 	turtle = new Turtle({
 		pos: new THREE.Vector3(0, 0, -10),
 		dir: new THREE.Vector3(0, 1, 0),
 		up:  new THREE.Vector3(0, 0, 1),
 		pen: {
-			color: 0xffffff
+			color: 0xffff00,
+			width: 1
 		}
 	});
 

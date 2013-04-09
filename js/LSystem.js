@@ -75,10 +75,8 @@
 					}
 					return ret;
 				}
-				else {
-					return literal + '(' + paramString + ')';
-				}
 			}
+			return literal + '(' + paramString + ')';
 		}
 	};
 
