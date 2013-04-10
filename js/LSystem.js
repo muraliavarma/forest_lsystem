@@ -1,5 +1,6 @@
 (function() {
 	LSystem = function(opts) {
+		this._opts = opts;
 		this.iterations = opts.iterations;
 		this.axiom = opts.axiom;
 		this.rules = {};
@@ -28,7 +29,7 @@
 					turtle.clear();
 					turtle.run(results[idx++]);
 				}
-			}, 1000);
+			}, 500);
 
 			for (var i = 0; i < this.iterations; i++) {
 				axiom = res;

@@ -1,6 +1,7 @@
 (function() {
 	Turtle = function(opts) {
 		this._opts = opts;
+		this.name = opts.name;
 		this.pos = opts.pos.clone();
 		this.dir = opts.dir.clone();
 		this.up = opts.up.clone();
@@ -79,6 +80,7 @@
 				}
 				this._idx++;
 			}
+			render();
 		},
 		reset: function() {
 			this.pos = this._opts.pos.clone();
@@ -89,7 +91,25 @@
 		clear: function() {
 			this.reset();
 			scene.children = [];
-			render();
+			// render();
+		},
+		setPos: function(vec) {
+			this.pos = vec;
+			this._opts.pos = this.pos.clone();
+			return this;
+		},
+		clone: function() {
+			var opts = this._opts;
+			return new Turtle({
+				name: opts.name + '_clone',
+				pos: opts.pos.clone(),
+				dir: opts.dir.clone(),
+				up:  opts.up.clone(),
+				pen: {
+					color: opts.pen.color,
+					width: opts.pen.width
+				}
+			});
 		},
 		_draw: function(p1, p2) {	
 			//needs to be optimized. use LinePieces maybe?	

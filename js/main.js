@@ -23,7 +23,7 @@ function onLoad() {
 		axiom: 'A(1, 10)',
 		constants: {
 			r1: 0.9,
-			r2: 0.9,
+			r2: 0.6,
 			a0: 45,
 			a2: 45,
 			d: 137.5,
@@ -68,7 +68,7 @@ var lsystem3 = new LSystem({
 	//cooler trees
 	var lsystem2 = new LSystem({
 		iterations: 6,
-		axiom: 'A(1,10)',
+		axiom: 'A(1, 10)',
 		constants: {
 			r1: 0.9,
 			r2: 0.7,
@@ -86,16 +86,7 @@ var lsystem3 = new LSystem({
 	});
 
 	var turtle = new Turtle({
-		pos: new THREE.Vector3(10, 0, 0),
-		dir: new THREE.Vector3(0, 1, 0),
-		up:  new THREE.Vector3(0, 0, 1),
-		pen: {
-			color: 0xffffee,
-			width: 1
-		}
-	});
-
-	var turtle2 = new Turtle({
+		name: 't1',
 		pos: new THREE.Vector3(0, 0, 0),
 		dir: new THREE.Vector3(0, 1, 0),
 		up:  new THREE.Vector3(0, 0, 1),
@@ -105,9 +96,10 @@ var lsystem3 = new LSystem({
 		}
 	});
 
+	var turtle2 = turtle.clone().setPos(new THREE.Vector3(10, -10, 0));
+
 	lsystem.generate(turtle);
-	console.log('asd');
-	// lsystem3.generate(turtle2);
+	lsystem.generate(turtle2);
 
 	container.onmousewheel = function() {
 		controls.update();
