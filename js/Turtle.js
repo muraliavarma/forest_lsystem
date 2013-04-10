@@ -13,6 +13,7 @@
 		dir: null,
 		pen: null,
 		_stack: [],
+		_lines: {},
 		run: function(cmd) {
 			this._cmd = cmd;
 			this._idx = 0;
@@ -22,7 +23,7 @@
 					case 'F':
 						var oldPos = this.pos.clone();
 						this.pos.add(this.dir.clone().multiplyScalar(parseFloat(this._getParam())));
-						this._draw(oldPos, this.pos.clone());
+						this._storeLine(oldPos, this.pos.clone());
 						break;
 					case '+':
 						var rad = parseFloat(this._getParam() * Math.PI / 180);
@@ -57,19 +58,19 @@
 						this.up = top.up;
 						break;
 					case 'A':
-						this.pen.color = 0xffffee;
+						this.pen.color = 0xff0000;
 						this._getParam();
 						break;
 					case 'B':
-						this.pen.color = 0xffeeee;
+						this.pen.color = 0x0000ee;
 						this._getParam();
 						break;
 					case 'C':
-						this.pen.color = 0xeeeeee;
+						this.pen.color = 0x00ff00;
 						this._getParam();
 						break;
 					case 'D':
-						this.pen.color = 0xff0000;
+						this.pen.color = 0xffff00;
 						this._getParam();
 						break;
 					case '!':
@@ -80,6 +81,7 @@
 				}
 				this._idx++;
 			}
+			this._drawLines();
 			render();
 		},
 		reset: function() {
@@ -87,6 +89,7 @@
 			this.dir = this._opts.dir.clone();
 			this.up = this._opts.up.clone();
 			this.pen = this._opts.pen;
+			this._lines = {};
 		},
 		clear: function() {
 			this.reset();
@@ -111,17 +114,29 @@
 				}
 			});
 		},
-		_draw: function(p1, p2) {	
-			//needs to be optimized. use LinePieces maybe?	
-			var material = new THREE.LineBasicMaterial({
-				color: this.pen.color,
-				linewidth: this.pen.width
-			});
-			var geometry = new THREE.Geometry();
-			geometry.vertices.push(p1);
-			geometry.vertices.push(p2);
-			var line = new THREE.Line(geometry, material);
-			scene.add(line);
+		_storeLine: function(p1, p2) {
+			var key = this.pen.color + '_' + this.pen.width;
+			if (!this._lines[key]) {
+				this._lines[key] = [];
+			}
+			this._lines[key].push(p1);
+			this._lines[key].push(p2);
+		},
+		_drawLines: function() {
+			for (var key in this._lines) {
+				var keySplit = key.split('_');
+				var color = keySplit[0];
+				var width = keySplit[1];
+				var material = new THREE.LineBasicMaterial({
+					color: new THREE.Color().setHex(color),
+					linewidth: width
+				});
+				var geometry = new THREE.Geometry();
+				for (var i = 0; i < this._lines[key].length; i++) {
+					geometry.vertices.push(this._lines[key][i]);
+				}
+				scene.add(new THREE.Line(geometry, material, THREE.LinePieces));
+			}
 		},
 		_getParam: function() {
 			var val = '';

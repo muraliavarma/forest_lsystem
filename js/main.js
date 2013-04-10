@@ -41,30 +41,6 @@ function onLoad() {
 		}]
 	});
 
-var lsystem3 = new LSystem({
-		iterations: 10,
-		axiom: 'A(1, 10)',
-		constants: {
-			r1: 0.9,
-			r2: 0.9,
-			a0: 45,
-			a2: 45,
-			d: 137.5,
-			wr: 0.707
-		},
-		rules: [{
-			lhs: 'D(l, w)',
-			rhs: '!(w)F(l)[&(a0)B(l*r2, w*wr)]/(d)D(l*r1, w*wr)'
-		},{
-			lhs: 'B(l, w)',
-			rhs: '!(w)F(l)[+(-a2)$C(l*r2, w*wr)]C(l*r1, w*wr)'
-		},{
-			lhs: 'C(l, w)',
-			rhs: '!(w)F(l)[+(a2)$B(l*r2, w*wr)]B(l*r1, w*wr)'
-		}]
-	});
-
-
 	//cooler trees
 	var lsystem2 = new LSystem({
 		iterations: 6,
@@ -96,10 +72,17 @@ var lsystem3 = new LSystem({
 		}
 	});
 
-	var turtle2 = turtle.clone().setPos(new THREE.Vector3(10, -10, 0));
+	// var turtle2 = ;
 
 	lsystem.generate(turtle);
-	lsystem.generate(turtle2);
+	lsystem.generate(turtle.clone().setPos(new THREE.Vector3(10, 0, 0)));
+	lsystem.generate(turtle.clone().setPos(new THREE.Vector3(-10, 0, 0)));
+	lsystem.generate(turtle.clone().setPos(new THREE.Vector3(0, 0, 10)));
+	lsystem.generate(turtle.clone().setPos(new THREE.Vector3(0, 0, -10)));
+	lsystem.generate(turtle.clone().setPos(new THREE.Vector3(-20, 0, 0)));
+	lsystem.generate(turtle.clone().setPos(new THREE.Vector3(0, 0, 20)));
+	lsystem.generate(turtle.clone().setPos(new THREE.Vector3(0, 0, 20)));
+	lsystem.generate(turtle.clone().setPos(new THREE.Vector3(0, 0, -20)));
 
 	container.onmousewheel = function() {
 		controls.update();
