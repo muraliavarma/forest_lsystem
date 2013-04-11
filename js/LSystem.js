@@ -11,23 +11,26 @@
 				this.rules[rule.lhs] = this.rules[rule.lhs].replace(new RegExp(constant, 'g'), opts.constants[constant]);
 			}
 		}
+		this.tropism = opts.tropism;
 	};
 
 	LSystem.prototype = {
 		iterations: 1,
 		axiom: null,
 		rules: null,
+		tropism: null,
 		generate: function(turtle) {
 			var numRules = this.rules.length;
 			var axiom = null;
 			var res = this.axiom;
 			var results = [];
 			var idx = 0;
+			var tropism = this.tropism;
 
 			setInterval(function(){
 				if (results.length > 0 && idx < results.length) {
 					turtle.clear();
-					turtle.run(results[idx++]);
+					turtle.run(results[idx++], tropism);
 				}
 			}, 500);
 

@@ -3,7 +3,7 @@ function onLoad() {
 	scene = new THREE.Scene();
 	var fov = 90;
 	var near = 1;
-	var far = 10000;
+	var far = 100000;
 
 	camera = new THREE.PerspectiveCamera(fov, 1, near, far);
 	camera.position = new THREE.Vector3(0, 0, 30);
@@ -29,6 +29,10 @@ function onLoad() {
 			d: 137.5,
 			wr: 0.707
 		},
+		tropism: {
+			vector: new THREE.Vector3(0, -1, 0),
+			e: 0.27
+		},
 		rules: [{
 			lhs: 'A(l, w)',
 			rhs: '!(w)F(l)[&(a0)B(l*r2, w*wr)]/(d)A(l*r1, w*wr)'
@@ -41,34 +45,38 @@ function onLoad() {
 		}]
 	});
 
-	var aano = new LSystem({
-		iterations: 10,
-		axiom: 'A(1, 10)',
-		constants: {
-			r1: 0.9,
-			r2: 0.8,
-			a1: 35,
-			a2: 35,
-			wr: 0.707
-		},
-		rules: [{
-			lhs: 'A(l, w)',
-			rhs: '!(w)F(l)[&(a1)B(l*r1, w*wr)]/(180)[&(a2)B(l*r2, w*wr)]'
-		},{
-			lhs: 'B(l, w)',
-			rhs: '!(w)F(l)[+(a1)$B(l*r1, w*wr)][+(-a2)$B(l*r2, w*wr)]'
-		}]
-	});
+	// var aano = new LSystem({
+	// 	iterations: 10,
+	// 	axiom: 'A(1, 10)',
+	// 	constants: {
+	// 		r1: 0.9,
+	// 		r2: 0.8,
+	// 		a1: 35,
+	// 		a2: 35,
+	// 		wr: 0.707
+	// 	},
+	// 	rules: [{
+	// 		lhs: 'A(l, w)',
+	// 		rhs: '!(w)F(l)[&(a1)B(l*r1, w*wr)]/(180)[&(a2)B(l*r2, w*wr)]'
+	// 	},{
+	// 		lhs: 'B(l, w)',
+	// 		rhs: '!(w)F(l)[+(a1)$B(l*r1, w*wr)][+(-a2)$B(l*r2, w*wr)]'
+	// 	}]
+	// });
 
 	// var ternary = new LSystem({
-	// 	iterations: 2,
+	// 	iterations: 8,
 	// 	axiom: '!(1)F(200)/(45)A',
 	// 	constants: {
-	// 		d1: 94.74,
-	// 		d2: 132.63,
-	// 		a: 18.95,
-	// 		lr: 1.109,
-	// 		vr: 1.732
+	// 		d1: 112.50,
+	// 		d2: 157.50,
+	// 		a: 30.50,
+	// 		lr: 1.390,
+	// 		vr: 1.332
+	// 	},
+	// 	tropism: {
+	// 		vector: new THREE.Vector3(-0.02, -1, 0),
+	// 		e: 0.27
 	// 	},
 	// 	rules: [{
 	// 		lhs: 'A',
@@ -88,8 +96,8 @@ function onLoad() {
 		dir: new THREE.Vector3(0, 1, 0),
 		up:  new THREE.Vector3(0, 0, 1),
 		pen: {
-			color: 0xffffee,
-			width: 1
+			color: 0x660000,
+			width: 0.5
 		}
 	});
 
@@ -99,7 +107,7 @@ function onLoad() {
 		}
 	}
 
-	aano.generate(turtle);
+	honda.generate(turtle);
 	
 	container.onmousewheel = function() {
 		controls.update();

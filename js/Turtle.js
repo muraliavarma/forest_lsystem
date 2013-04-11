@@ -14,7 +14,7 @@
 		pen: null,
 		_stack: [],
 		_lines: {},
-		run: function(cmd) {
+		run: function(cmd, tropism) {
 			this._cmd = cmd;
 			this._idx = 0;
 			while(this._idx < cmd.length) {
@@ -22,6 +22,13 @@
 				switch(cmd[this._idx]) {
 					case 'F':
 						var oldPos = this.pos.clone();
+						if (tropism) {
+							var cross = this.dir.clone().cross(tropism.vector);
+							var alpha = tropism.e * cross.length();
+							// console.log(cross);
+							this.dir.applyMatrix4(new THREE.Matrix4().makeRotationAxis(cross, alpha));
+							this.up.applyMatrix4(new THREE.Matrix4().makeRotationAxis(cross, alpha));
+						}
 						this.pos.add(this.dir.clone().multiplyScalar(parseFloat(this._getParam())));
 						this._storeLine(oldPos, this.pos.clone());
 						break;
@@ -144,6 +151,11 @@
 				while (this._cmd[++this._idx] != ')') {
 					val += this._cmd[this._idx];
 				}
+			}
+			if (val == '') {
+				//this is to compensate for idx values that get incremented in the  above if loop to get reset back
+				//(used in tropism where A does not have any parameters passed into it)
+				this._idx --;
 			}
 			return val;
 		}
