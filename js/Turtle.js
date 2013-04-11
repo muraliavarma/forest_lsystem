@@ -58,15 +58,15 @@
 						this.up = top.up;
 						break;
 					case 'A':
-						this.pen.color = 0xff0000;
+						this.pen.color = 0x660000;
 						this._getParam();
 						break;
 					case 'B':
-						this.pen.color = 0x0000ee;
+						this.pen.color = 0x660033;
 						this._getParam();
 						break;
 					case 'C':
-						this.pen.color = 0x00ff00;
+						this.pen.color = 0x663300;
 						this._getParam();
 						break;
 					case 'D':

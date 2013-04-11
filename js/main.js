@@ -17,8 +17,8 @@ function onLoad() {
 	controls.zoomSpeed = 0.1;
 	controls.addEventListener('change', render);
 
-	//honda trees
-	var lsystem = new LSystem({
+	//sample l systems
+	var honda = new LSystem({
 		iterations: 10,
 		axiom: 'A(1, 10)',
 		constants: {
@@ -41,15 +41,14 @@ function onLoad() {
 		}]
 	});
 
-	//cooler trees
-	var lsystem2 = new LSystem({
-		iterations: 6,
+	var aano = new LSystem({
+		iterations: 10,
 		axiom: 'A(1, 10)',
 		constants: {
 			r1: 0.9,
-			r2: 0.7,
-			a1: 10,
-			a2: 60,
+			r2: 0.8,
+			a1: 35,
+			a2: 35,
 			wr: 0.707
 		},
 		rules: [{
@@ -57,9 +56,31 @@ function onLoad() {
 			rhs: '!(w)F(l)[&(a1)B(l*r1, w*wr)]/(180)[&(a2)B(l*r2, w*wr)]'
 		},{
 			lhs: 'B(l, w)',
-			rhs: '!(w)F(l)[+(a1)$B(l*r1,w*wr)][-(a2)$B(l*r2,w*wr)]'
+			rhs: '!(w)F(l)[+(a1)$B(l*r1, w*wr)][+(-a2)$B(l*r2, w*wr)]'
 		}]
 	});
+
+	// var ternary = new LSystem({
+	// 	iterations: 2,
+	// 	axiom: '!(1)F(200)/(45)A',
+	// 	constants: {
+	// 		d1: 94.74,
+	// 		d2: 132.63,
+	// 		a: 18.95,
+	// 		lr: 1.109,
+	// 		vr: 1.732
+	// 	},
+	// 	rules: [{
+	// 		lhs: 'A',
+	// 		rhs: '!(vr)F(50)[&(a)F(50)A]/(d1)[&(a)F(50)A]/(d2)[&(a)F(50)A]'
+	// 	},{
+	// 		lhs: 'F(l)',
+	// 		rhs: 'F(l*lr)'
+	// 	},{
+	// 		lhs: '!(w)',
+	// 		rhs: '!(w*vr)'
+	// 	}]
+	// });
 
 	var turtle = new Turtle({
 		name: 't1',
@@ -72,18 +93,14 @@ function onLoad() {
 		}
 	});
 
-	// var turtle2 = ;
+	for (var i = 0; i < 5; i++) {
+		for (var j = 0; j < 5; j++) {
+			// honda.generate(turtle.clone().setPos(new THREE.Vector3(i * 4, 0, j * 4)));
+		}
+	}
 
-	lsystem.generate(turtle);
-	lsystem.generate(turtle.clone().setPos(new THREE.Vector3(10, 0, 0)));
-	lsystem.generate(turtle.clone().setPos(new THREE.Vector3(-10, 0, 0)));
-	lsystem.generate(turtle.clone().setPos(new THREE.Vector3(0, 0, 10)));
-	lsystem.generate(turtle.clone().setPos(new THREE.Vector3(0, 0, -10)));
-	lsystem.generate(turtle.clone().setPos(new THREE.Vector3(-20, 0, 0)));
-	lsystem.generate(turtle.clone().setPos(new THREE.Vector3(0, 0, 20)));
-	lsystem.generate(turtle.clone().setPos(new THREE.Vector3(0, 0, 20)));
-	lsystem.generate(turtle.clone().setPos(new THREE.Vector3(0, 0, -20)));
-
+	aano.generate(turtle);
+	
 	container.onmousewheel = function() {
 		controls.update();
 	}
