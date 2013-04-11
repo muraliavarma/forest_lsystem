@@ -15,6 +15,7 @@
 		_stack: [],
 		_lines: {},
 		run: function(cmd, tropism) {
+			cmd = 'A(0)' + cmd;	//to set default color to A
 			this._cmd = cmd;
 			this._idx = 0;
 			while(this._idx < cmd.length) {
@@ -25,7 +26,6 @@
 						if (tropism) {
 							var cross = this.dir.clone().cross(tropism.vector);
 							var alpha = tropism.e * cross.length();
-							// console.log(cross);
 							this.dir.applyMatrix4(new THREE.Matrix4().makeRotationAxis(cross, alpha));
 							this.up.applyMatrix4(new THREE.Matrix4().makeRotationAxis(cross, alpha));
 						}
@@ -65,15 +65,15 @@
 						this.up = top.up;
 						break;
 					case 'A':
-						this.pen.color = 0x660000;
+						this.pen.color = 0x5c4033;
 						this._getParam();
 						break;
 					case 'B':
-						this.pen.color = 0x660033;
+						this.pen.color = 0x6c4033;
 						this._getParam();
 						break;
 					case 'C':
-						this.pen.color = 0x663300;
+						this.pen.color = 0x7c4033;
 						this._getParam();
 						break;
 					case 'D':

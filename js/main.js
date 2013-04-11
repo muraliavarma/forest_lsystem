@@ -45,25 +45,30 @@ function onLoad() {
 		}]
 	});
 
-	// var aano = new LSystem({
-	// 	iterations: 10,
-	// 	axiom: 'A(1, 10)',
-	// 	constants: {
-	// 		r1: 0.9,
-	// 		r2: 0.8,
-	// 		a1: 35,
-	// 		a2: 35,
-	// 		wr: 0.707
-	// 	},
-	// 	rules: [{
-	// 		lhs: 'A(l, w)',
-	// 		rhs: '!(w)F(l)[&(a1)B(l*r1, w*wr)]/(180)[&(a2)B(l*r2, w*wr)]'
-	// 	},{
-	// 		lhs: 'B(l, w)',
-	// 		rhs: '!(w)F(l)[+(a1)$B(l*r1, w*wr)][+(-a2)$B(l*r2, w*wr)]'
-	// 	}]
-	// });
+	var aano = new LSystem({
+		iterations: 10,
+		axiom: 'A(1, 10)',
+		constants: {
+			r1: 0.9,
+			r2: 0.8,
+			a1: 35,
+			a2: 35,
+			wr: 0.707
+		},
+		tropism: {
+			vector: new THREE.Vector3(0, -1, 0),
+			e: 0.27
+		},
+		rules: [{
+			lhs: 'A(l, w)',
+			rhs: '!(w)F(l)[&(a1)B(l*r1, w*wr)]/(180)[&(a2)B(l*r2, w*wr)]'
+		},{
+			lhs: 'B(l, w)',
+			rhs: '!(w)F(l)[+(a1)$B(l*r1, w*wr)][+(-a2)$B(l*r2, w*wr)]'
+		}]
+	});
 
+	// looks like this l system defined in ABoP has some incorrect params
 	// var ternary = new LSystem({
 	// 	iterations: 8,
 	// 	axiom: '!(1)F(200)/(45)A',
@@ -96,8 +101,7 @@ function onLoad() {
 		dir: new THREE.Vector3(0, 1, 0),
 		up:  new THREE.Vector3(0, 0, 1),
 		pen: {
-			color: 0x660000,
-			width: 0.5
+			width: 1
 		}
 	});
 
@@ -108,6 +112,7 @@ function onLoad() {
 	}
 
 	honda.generate(turtle);
+	aano.generate(turtle.clone().setPos(new THREE.Vector3(10, 0, 0)));
 	
 	container.onmousewheel = function() {
 		controls.update();
