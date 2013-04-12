@@ -1,4 +1,4 @@
-Turtule3D
+L-systems and Forests
 =========
 
-An Three.js implementation of Turtle Graphics in 3D
+An Three.js implementation of L-systems using Turtle Graphics
