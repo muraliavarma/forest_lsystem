@@ -6,7 +6,7 @@ function onLoad() {
 	var far = 100000;
 
 	camera = new THREE.PerspectiveCamera(fov, 1, near, far);
-	camera.position = new THREE.Vector3(0, 0, 30);
+	camera.position = new THREE.Vector3(0, 5, 15);
 
 	var container = document.getElementById('canvasContainer');
 	renderer = new THREE.WebGLRenderer();
@@ -47,7 +47,7 @@ function onLoad() {
 
 	var aano = new LSystem({
 		iterations: 10,
-		axiom: 'A(1, 10)',
+		axiom: 'A(2, 10)',
 		constants: {
 			r1: 0.9,
 			r2: 0.8,
@@ -95,6 +95,26 @@ function onLoad() {
 	// 	}]
 	// });
 
+	var tropismTree = new LSystem({
+		iterations: 12,
+		axiom: 'A(1, 5)',
+		constants: {
+			r1: 0.9,
+			r2: 0.8,
+			a1: 35,
+			a2: 35,
+			wr: 0.707
+		},
+		tropism: {
+			vector: new THREE.Vector3(0, -1, 0),
+			e: 0.01
+		},
+		rules: [{
+			lhs: 'A(s, w)',
+			rhs: '!(w)F(s)[+(30)/(137)A(s*0.8, w*0.8)][+(-10)/(-90)A(s*0.9, w*0.8)]'
+		}]
+	});
+
 	var turtle = new Turtle({
 		name: 't1',
 		pos: new THREE.Vector3(0, 0, 0),
@@ -113,6 +133,7 @@ function onLoad() {
 
 	honda.generate(turtle);
 	aano.generate(turtle.clone().setPos(new THREE.Vector3(10, 0, 0)));
+	tropismTree.generate(turtle.clone().setPos(new THREE.Vector3(-10, 0, 0)));
 	
 	container.onmousewheel = function() {
 		controls.update();

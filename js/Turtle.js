@@ -100,8 +100,10 @@
 		},
 		clear: function() {
 			this.reset();
+			var plane = new THREE.Mesh(new THREE.PlaneGeometry(100, 100, 1, 1), new THREE.MeshBasicMaterial({color: 0x222222}));
+			plane.rotation.x = -Math.PI / 2;
 			scene.children = [];
-			// render();
+			scene.add(plane);
 		},
 		setPos: function(vec) {
 			this.pos = vec;
