@@ -107,7 +107,7 @@ function onLoad() {
 		},
 		tropism: {
 			vector: new THREE.Vector3(0, -1, 0),
-			e: 0.01
+			e: 0.1
 		},
 		rules: [{
 			lhs: 'A(s, w)',

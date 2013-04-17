@@ -25,11 +25,12 @@
 			var res = this.axiom;
 			var results = [];
 			var idx = 0;
+			var tropism = this.tropism;
 
 			setInterval(function(){
 				if (results.length > 0 && idx < results.length) {
 					turtle.clear();
-					turtle.run(results[idx++], {tropism: this.tropism});
+					turtle.run(results[idx++], {tropism: tropism});
 				}
 			}, 500);
 
