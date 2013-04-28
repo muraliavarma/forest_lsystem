@@ -4,6 +4,7 @@
 	};
 
 	Environment.prototype = {
+		_trees: [],
 		interpret: function(str) {
 			var res = '';
 			for (var i = 0; i < str.length; i++) {
@@ -15,6 +16,9 @@
 				}
 			}
 			return res;
+		},
+		addTree: function(tree) {
+			this._trees.push(tree);
 		}
 	}
 })();
