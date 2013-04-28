@@ -17,9 +17,12 @@ function onLoad() {
 	controls.zoomSpeed = 0.1;
 	controls.addEventListener('change', render);
 
+	var env = new Environment();
+
 	//sample l systems
 	var honda = new LSystem({
 		iterations: 10,
+		env: env,
 		axiom: 'A(1, 10)',
 		constants: {
 			r1: 0.9,
@@ -47,6 +50,7 @@ function onLoad() {
 
 	var aano = new LSystem({
 		iterations: 10,
+		env: env,
 		axiom: 'A(2, 10)',
 		constants: {
 			r1: 0.9,
@@ -97,6 +101,7 @@ function onLoad() {
 
 	var tropismTree = new LSystem({
 		iterations: 12,
+		env: env,
 		axiom: 'A(1, 5)',
 		constants: {
 			r1: 0.9,

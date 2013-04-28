@@ -4,6 +4,7 @@
 		this.iterations = opts.iterations;
 		this.axiom = opts.axiom;
 		this.rules = {};
+		this.env = opts.env;
 		for (var i = 0; i < opts.rules.length; i++) {
 			var rule = opts.rules[i];
 			this.rules[rule.lhs] = rule.rhs;
@@ -19,6 +20,7 @@
 		axiom: null,
 		rules: null,
 		tropism: null,
+		env: null,
 		generate: function(turtle) {
 			var numRules = this.rules.length;
 			var axiom = null;
@@ -49,9 +51,9 @@
 					}
 					res += this._parametrize(left, paramString);
 				}
+				res = this.env.interpret(res);
 				results.push(res);
 			}
-			return res;
 		},
 		_parametrize: function(literal, paramString) {
 			if (!paramString) {
