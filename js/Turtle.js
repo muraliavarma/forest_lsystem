@@ -59,10 +59,22 @@
 						})
 						break;
 					case ']':
-						var top = this._stack.pop();
-						this.pos = top.pos;
-						this.dir = top.dir;
-						this.up = top.up;
+						this._popStack();
+						break;
+					case '%':
+						//prune this branch
+						//example: aaa[asdadasd[aa[dsd%a[s]da]bbb]ccc]asdadasd
+						var ctr = 0;
+						while(++this._idx < cmd.length && ctr != -1) {
+							if (cmd[this._idx] == '[') {
+								ctr ++;
+							}
+							if (cmd[this._idx] == ']') {
+								ctr --;
+							}
+						}
+						this._idx --;	//to compensate for the idx increment that happens right after all the switch cases
+						this._popStack();
 						break;
 					case 'A':
 						this.pen.color = 0x5c4033;
@@ -160,6 +172,12 @@
 				this._idx --;
 			}
 			return val;
+		},
+		_popStack: function() {
+			var top = this._stack.pop();
+			this.pos = top.pos;
+			this.dir = top.dir;
+			this.up = top.up;
 		}
 	};
 
