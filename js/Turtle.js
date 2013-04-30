@@ -76,6 +76,10 @@
 						this._idx --;	//to compensate for the idx increment that happens right after all the switch cases
 						this._popStack();
 						break;
+					case 'L':
+						this.pen.color = 0x004000;
+						this._getParam();
+						break;
 					case 'A':
 						this.pen.color = 0x5c4033;
 						this._getParam();
@@ -114,7 +118,9 @@
 			this.reset();
 			var plane = new THREE.Mesh(new THREE.PlaneGeometry(100, 100, 1, 1), new THREE.MeshBasicMaterial({color: 0x222222}));
 			plane.rotation.x = -Math.PI / 2;
-			scene.children = [];
+			while (scene.children.length > 0) {
+				scene.remove(scene.children[0]);
+			}
 			scene.add(plane);
 		},
 		setPos: function(vec) {

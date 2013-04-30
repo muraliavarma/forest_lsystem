@@ -51,8 +51,8 @@
 					}
 					res += this._parametrize(left, paramString);
 				}
-				res = this.env.interpret(res);
-				results.push(res);
+				// res = ;
+				results.push(this.env.interpret(res));
 			}
 		},
 		_parametrize: function(literal, paramString) {

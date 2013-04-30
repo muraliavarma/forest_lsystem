@@ -137,12 +137,12 @@ function onLoad() {
 	}
 
 	env.addTree(honda);
-	env.addTree(aano);
-	env.addTree(tropismTree);
+	// env.addTree(aano);
+	// env.addTree(tropismTree);
 
 	honda.generate(turtle);
-	aano.generate(turtle.clone().setPos(new THREE.Vector3(10, 0, 0)));
-	tropismTree.generate(turtle.clone().setPos(new THREE.Vector3(-10, 0, 0)));
+	// aano.generate(turtle.clone().setPos(new THREE.Vector3(10, 0, 0)));
+	// tropismTree.generate(turtle.clone().setPos(new THREE.Vector3(-10, 0, 0)));
 	
 	container.onmousewheel = function() {
 		controls.update();
