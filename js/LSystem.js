@@ -4,6 +4,7 @@
 		this.iterations = opts.iterations;
 		this.axiom = opts.axiom;
 		this.rules = {};
+		this.growth = opts.growth;
 		this.env = opts.env;
 		for (var i = 0; i < opts.rules.length; i++) {
 			var rule = opts.rules[i];
@@ -19,6 +20,7 @@
 		iterations: 1,
 		axiom: null,
 		rules: null,
+		growth: 1,
 		tropism: null,
 		env: null,
 		generate: function(turtle) {
@@ -28,11 +30,15 @@
 			var results = [];
 			var idx = 0;
 			var tropism = this.tropism;
+			var growth = this.growth;
 
 			setInterval(function(){
 				if (results.length > 0 && idx < results.length) {
 					turtle.clear();
-					turtle.run(results[idx++], {tropism: tropism});
+					turtle.run(results[idx++], {
+						tropism: tropism,
+						growth: growth
+					});
 				}
 			}, 500);
 

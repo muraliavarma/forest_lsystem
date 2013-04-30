@@ -36,6 +36,7 @@ function onLoad() {
 			vector: new THREE.Vector3(0, -1, 0),
 			e: 0.27
 		},
+		growth: 1,
 		rules: [{
 			lhs: 'A(l, w)',
 			rhs: '!(w)F(l)[&(a0)B(l*r2, w*wr)]/(d)A(l*r1, w*wr)'

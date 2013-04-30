@@ -23,13 +23,19 @@
 				switch(cmd[this._idx]) {
 					case 'F':
 						var oldPos = this.pos.clone();
-						if (opts && opts.tropism) {
-							var cross = this.dir.clone().cross(opts.tropism.vector);
-							var alpha = opts.tropism.e * cross.length();
-							this.dir.applyMatrix4(new THREE.Matrix4().makeRotationAxis(cross, alpha));
-							this.up.applyMatrix4(new THREE.Matrix4().makeRotationAxis(cross, alpha));
+						var growth = 1;
+						if (opts) {
+							if (opts.tropism) {
+								var cross = this.dir.clone().cross(opts.tropism.vector);
+								var alpha = opts.tropism.e * cross.length();
+								this.dir.applyMatrix4(new THREE.Matrix4().makeRotationAxis(cross, alpha));
+								this.up.applyMatrix4(new THREE.Matrix4().makeRotationAxis(cross, alpha));
+							}
+							if (opts.growth) {
+								growth = opts.growth;
+							}
 						}
-						this.pos.add(this.dir.clone().multiplyScalar(parseFloat(this._getParam())));
+						this.pos.add(this.dir.clone().multiplyScalar(growth * parseFloat(this._getParam())));
 						this._storeLine(oldPos, this.pos.clone());
 						break;
 					case '+':
