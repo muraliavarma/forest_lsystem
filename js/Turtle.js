@@ -6,6 +6,7 @@
 		this.dir = opts.dir.clone();
 		this.up = opts.up.clone();
 		this.pen = opts.pen;
+		this._sceneChildren = [];
 	};
 
 	Turtle.prototype = {
@@ -14,6 +15,7 @@
 		pen: null,
 		_stack: [],
 		_lines: {},
+		_sceneChildren: [],
 		run: function(cmd, opts) {
 			cmd = 'A(0)' + cmd;	//to set default color to A
 			this._cmd = cmd;
@@ -124,10 +126,11 @@
 			this.reset();
 			var plane = new THREE.Mesh(new THREE.PlaneGeometry(100, 100, 1, 1), new THREE.MeshBasicMaterial({color: 0x222222}));
 			plane.rotation.x = -Math.PI / 2;
-			while (scene.children.length > 0) {
-				scene.remove(scene.children[0]);
+			while (this._sceneChildren.length > 0) {
+				var sceneChild = this._sceneChildren.pop();
+				scene.remove(sceneChild);
 			}
-			scene.add(plane);
+			// scene.add(plane);
 		},
 		setPos: function(vec) {
 			this.pos = vec;
@@ -168,7 +171,9 @@
 				for (var i = 0; i < this._lines[key].length; i++) {
 					geometry.vertices.push(this._lines[key][i]);
 				}
-				scene.add(new THREE.Line(geometry, material, THREE.LinePieces));
+				var line = new THREE.Line(geometry, material, THREE.LinePieces)
+				this._sceneChildren.push(line);
+				scene.add(line);
 			}
 		},
 		_getParam: function() {

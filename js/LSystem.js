@@ -1,7 +1,7 @@
 (function() {
 	LSystem = function(opts) {
 		this._opts = opts;
-		this.iterations = opts.iterations;
+		this.maxAge = opts.maxAge;
 		this.axiom = opts.axiom;
 		this.rules = {};
 		this.growth = opts.growth;
@@ -17,7 +17,8 @@
 	};
 
 	LSystem.prototype = {
-		iterations: 1,
+		maxAge: 1,
+		age: 0,
 		axiom: null,
 		rules: null,
 		growth: 1,
@@ -42,7 +43,7 @@
 				}
 			}, 500);
 
-			for (var i = 0; i < this.iterations; i++) {
+			for (var i = 0; i < this.maxAge; i++) {
 				axiom = res;
 				res = '';
 				for (var j = 0; j < axiom.length;) {
@@ -60,6 +61,18 @@
 				// res = ;
 				results.push(this.env.interpret(res));
 			}
+		},
+		clone: function() {
+			var opts = this._opts;
+			return new LSystem({
+				maxAge: opts.maxAge,
+				axiom: opts.axiom,
+				rules: opts.rules,
+				growth: opts.growth,
+				env: opts.env,
+				constants: opts.constants,
+				tropism: opts.tropism
+			});
 		},
 		_parametrize: function(literal, paramString) {
 			if (!paramString) {

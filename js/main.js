@@ -21,7 +21,8 @@ function onLoad() {
 
 	//sample l systems
 	var honda = new LSystem({
-		iterations: 10,
+		birth: 0,
+		maxAge: 5,
 		env: env,
 		axiom: 'A(1, 10)',
 		constants: {
@@ -49,29 +50,29 @@ function onLoad() {
 		}]
 	});
 
-	var aano = new LSystem({
-		iterations: 10,
-		env: env,
-		axiom: 'A(2, 10)',
-		constants: {
-			r1: 0.9,
-			r2: 0.8,
-			a1: 35,
-			a2: 35,
-			wr: 0.707
-		},
-		tropism: {
-			vector: new THREE.Vector3(0, -1, 0),
-			e: 0.27
-		},
-		rules: [{
-			lhs: 'A(l, w)',
-			rhs: '!(w)F(l)[&(a1)B(l*r1, w*wr)]/(180)[&(a2)B(l*r2, w*wr)]'
-		},{
-			lhs: 'B(l, w)',
-			rhs: '!(w)F(l)[+(a1)$B(l*r1, w*wr)][+(-a2)$B(l*r2, w*wr)]'
-		}]
-	});
+	// var aano = new LSystem({
+	// 	iterations: 10,
+	// 	env: env,
+	// 	axiom: 'A(2, 10)',
+	// 	constants: {
+	// 		r1: 0.9,
+	// 		r2: 0.8,
+	// 		a1: 35,
+	// 		a2: 35,
+	// 		wr: 0.707
+	// 	},
+	// 	tropism: {
+	// 		vector: new THREE.Vector3(0, -1, 0),
+	// 		e: 0.27
+	// 	},
+	// 	rules: [{
+	// 		lhs: 'A(l, w)',
+	// 		rhs: '!(w)F(l)[&(a1)B(l*r1, w*wr)]/(180)[&(a2)B(l*r2, w*wr)]'
+	// 	},{
+	// 		lhs: 'B(l, w)',
+	// 		rhs: '!(w)F(l)[+(a1)$B(l*r1, w*wr)][+(-a2)$B(l*r2, w*wr)]'
+	// 	}]
+	// });
 
 	// looks like this l system defined in ABoP has some incorrect params
 	// var ternary = new LSystem({
@@ -137,13 +138,8 @@ function onLoad() {
 		}
 	}
 
-	env.addTree(honda);
-	// env.addTree(aano);
-	// env.addTree(tropismTree);
-
-	honda.generate(turtle);
-	// aano.generate(turtle.clone().setPos(new THREE.Vector3(10, 0, 0)));
-	// tropismTree.generate(turtle.clone().setPos(new THREE.Vector3(-10, 0, 0)));
+	env.addTree(honda, turtle);
+	env.addTree(honda.clone(), turtle.clone().setPos(new THREE.Vector3(10, 0, 0)));
 	
 	container.onmousewheel = function() {
 		controls.update();

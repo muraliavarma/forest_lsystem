@@ -39,8 +39,9 @@
 			}
 			return res;
 		},
-		addTree: function(tree) {
+		addTree: function(tree, turtle) {
 			this._trees.push(tree);
+			tree.generate(turtle);
 		}
 	}
 })();
