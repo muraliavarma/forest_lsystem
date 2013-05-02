@@ -96,15 +96,17 @@
 						this._getParam();
 						break;
 					case 'A':
-						this.pen.color = 0x5c4033;
+						this.pen.color = 0x3c2013;
 						this._getParam();
 						break;
 					case 'B':
-						this.pen.color = 0x6c4033;
+						this.pen.color = 0x3c2013;
+						// this.pen.color = 0x6c4033;
 						this._getParam();
 						break;
 					case 'C':
-						this.pen.color = 0x7c4033;
+						this.pen.color = 0x3c2013;
+						// this.pen.color = 0x7c4033;
 						this._getParam();
 						break;
 					case 'D':

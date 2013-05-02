@@ -10,6 +10,7 @@ function onLoad() {
 
 	var container = document.getElementById('canvasContainer');
 	renderer = new THREE.WebGLRenderer();
+	renderer.setClearColorHex(0x228888);
 	renderer.setSize(500, 500);
 	container.appendChild(renderer.domElement);
 
@@ -22,7 +23,6 @@ function onLoad() {
 	//sample l systems
 	var honda = new LSystem({
 		maxAge: 10,
-		// env: env,
 		axiom: 'A(1, 10)',
 		constants: {
 			r1: 0.9,
@@ -42,36 +42,36 @@ function onLoad() {
 			rhs: '!(w)F(l)[&(a0)B(l*r2, w*wr)]/(d)A(l*r1, w*wr)'
 		},{
 			lhs: 'B(l, w)',
-			rhs: '!(w)F(l)[+(-a2)$C(l*r2, w*wr)]C(l*r1, w*wr)'
+			rhs: '!(w)L(0)F(l)[+(-a2)$C(l*r2, w*wr)]C(l*r1, w*wr)'
 		},{
 			lhs: 'C(l, w)',
-			rhs: '!(w)F(l)[+(a2)$B(l*r2, w*wr)]B(l*r1, w*wr)'
+			rhs: '!(w)L(0)F(l)[+(a2)$B(l*r2, w*wr)]B(l*r1, w*wr)'
 		}]
 	});
 
-	// var aano = new LSystem({
-	// 	iterations: 10,
-	// 	env: env,
-	// 	axiom: 'A(2, 10)',
-	// 	constants: {
-	// 		r1: 0.9,
-	// 		r2: 0.8,
-	// 		a1: 35,
-	// 		a2: 35,
-	// 		wr: 0.707
-	// 	},
-	// 	tropism: {
-	// 		vector: new THREE.Vector3(0, -1, 0),
-	// 		e: 0.27
-	// 	},
-	// 	rules: [{
-	// 		lhs: 'A(l, w)',
-	// 		rhs: '!(w)F(l)[&(a1)B(l*r1, w*wr)]/(180)[&(a2)B(l*r2, w*wr)]'
-	// 	},{
-	// 		lhs: 'B(l, w)',
-	// 		rhs: '!(w)F(l)[+(a1)$B(l*r1, w*wr)][+(-a2)$B(l*r2, w*wr)]'
-	// 	}]
-	// });
+	var aano = new LSystem({
+		maxAge: 10,
+		axiom: 'A(2, 10)',
+		constants: {
+			r1: 0.9,
+			r2: 0.8,
+			a1: 35,
+			a2: 35,
+			wr: 0.707
+		},
+		tropism: {
+			vector: new THREE.Vector3(0, -1, 0),
+			e: 0.27
+		},
+		growth: 5,
+		rules: [{
+			lhs: 'A(l, w)',
+			rhs: '!(w)F(l)[&(a1)B(l*r1, w*wr)]/(180)[&(a2)B(l*r2, w*wr)]'
+		},{
+			lhs: 'B(l, w)',
+			rhs: '!(w)F(l)[+(a1)$B(l*r1, w*wr)][+(-a2)$B(l*r2, w*wr)]'
+		}]
+	});
 
 	// looks like this l system defined in ABoP has some incorrect params
 	// var ternary = new LSystem({

@@ -5,7 +5,7 @@
 		this.age = 0;
 		this.width = 100;
 		this.height = 100;
-		var plane = new THREE.Mesh(new THREE.PlaneGeometry(this.width, this.height, 1, 1), new THREE.MeshBasicMaterial({color: 0x222222}));
+		var plane = new THREE.Mesh(new THREE.PlaneGeometry(this.width, this.height, 1, 1), new THREE.MeshBasicMaterial({color: 0x555555}));
 		plane.rotation.x = -Math.PI / 2;
 		scene.add(plane);
 		this._isUpdating = false;
@@ -20,7 +20,7 @@
 		// 	var res = '';
 		// 	for (var i = 0; i < str.length; i++) {
 		// 		//mark the innermost branch as leaves
-		// 		if (false /*str[i] == ']'*/) {
+		// 		if (str[i] == ']') {
 		// 			var branch = ']';
 		// 			for (var j = i - 1; j >= 0; j--) {
 		// 				if (str[j] == ']') {
@@ -99,9 +99,7 @@
 				var iTree = this.trees[i];
 				for (var j = i + 1; j < this.trees.length; j++) {
 					var jTree = this.trees[j];
-					// console.log(iTree.pos, jTree.pos);
 					if (Math.abs(iTree.pos.x - jTree.pos.x) < 20 && Math.abs(iTree.pos.y - jTree.pos.y) < 20) {
-						// console.log(iTree.turtle.age, jTree.turtle.age);
 						if (iTree.turtle.age > jTree.turtle.age) {
 							dominatedList.push(jTree.turtle.idx);
 						}
@@ -111,7 +109,6 @@
 					}
 				}
 			}
-			// console.log(dominatedList);
 
 			var removeList = [];
 			for (i = 0; i < this.trees.length; i++) {
