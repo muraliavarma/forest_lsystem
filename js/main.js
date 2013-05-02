@@ -131,13 +131,27 @@ function onLoad() {
 		}
 	});
 
-	for (var i = 0; i < 3; i++) {
-		for (var j = 0; j < 2; j++) {
-			env.addTree(honda, turtle.clone().setPos(new THREE.Vector3(10 - i * 4, 0, j * 4)));
-		}
-	}
+	// for (var i = 0; i < 3; i++) {
+	// 	for (var j = 0; j < 2; j++) {
+	// 		env.addTree(honda, turtle.clone().setPos(new THREE.Vector3(6 - i, 0, j)));
+	// 	}
+	// }
+
+	var i = 0, j = 0, done = false;
 
 	setInterval(function() {
+		if (j == 2) {
+			j = 0;
+			i ++;
+		}
+		if (i >= 3) {
+			done = true;
+		}
+		j ++;
+		if (!done) {
+			env.addTree(honda, turtle.clone().setPos(new THREE.Vector3(6 - i, 0, j)));
+			console.log('tree created', i, j);
+		}
 		env.update();
 	}, 500);
 

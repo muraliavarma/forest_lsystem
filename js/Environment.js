@@ -46,6 +46,8 @@
 		// },
 		addTree: function(tree, turtle) {
 			turtle.idx = this._currIdx ++;
+			turtle.birth = this.age;
+			turtle.age = 0;
 			this.trees.push({
 				tree: tree,
 				turtle: turtle
@@ -67,10 +69,11 @@
 				return;
 			}
 			this._isUpdating = true;
+
 			var removeList = [];
 			for (var i = 0; i < this.trees.length; i++) {
 				var turtle = this.trees[i].turtle;
-				var idx = this.age - turtle.birth;
+				var idx = turtle.age;
 				var results = turtle.results;
 				if (idx >= 0 && idx < results.length) {
 					turtle.clear();

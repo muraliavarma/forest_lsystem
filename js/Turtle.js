@@ -9,7 +9,8 @@
 		this._sceneChildren = [];
 		this.idx = -1;
 		this.results = [];
-		this.birth = 0;	//i think this should be environment's age
+		this.birth = 0;
+		this.age = -1;
 	};
 
 	Turtle.prototype = {
@@ -22,7 +23,7 @@
 		_sceneChildren: [],
 		results: [],
 		run: function(cmd, opts) {
-			console.log(this.idx);
+			this.age ++;
 			cmd = 'A(0)' + cmd;	//to set default color to A
 			this._cmd = cmd;
 			this._idx = 0;
@@ -139,8 +140,6 @@
 		setPos: function(vec) {
 			this.pos = vec;
 			this._opts.pos = this.pos.clone();
-			this.birth = parseInt(Math.random() * 20);
-			console.log(this.birth);
 			return this;
 		},
 		clone: function() {
