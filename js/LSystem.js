@@ -54,7 +54,6 @@
 				this.results.push(res);	//for caching
 				this._isGenerated = true;
 				turtle.results.push(res);
-				console.log('Generating L systems for ' + i + ' iterations');
 			}
 		},
 		// clone: function() {

@@ -6,12 +6,14 @@
 		var plane = new THREE.Mesh(new THREE.PlaneGeometry(100, 100, 1, 1), new THREE.MeshBasicMaterial({color: 0x222222}));
 		plane.rotation.x = -Math.PI / 2;
 		scene.add(plane);
+		this._isUpdating = false;
 	};
 
 	Environment.prototype = {
 		trees: [],
 		age: 0,
 		_maxTrees: 0,
+		_isUpdating: false,
 		// interpret: function(str) {
 		// 	var res = '';
 		// 	for (var i = 0; i < str.length; i++) {
@@ -51,16 +53,20 @@
 			tree.generate(turtle);
 		},
 		removeTree: function(idx) {
-			var index = -1;
+			var index = 0;
 			for (var i = 0; i < this.trees.length; i++) {
 				if (this.trees[i].turtle.idx == idx) {
-					index = idx;
+					index = i;
 					break;
 				}
 			}
 			this.trees.splice(index, 1);
 		},
 		update: function() {
+			if (this._isUpdating) {
+				return;
+			}
+			this._isUpdating = true;
 			var removeList = [];
 			for (var i = 0; i < this.trees.length; i++) {
 				var turtle = this.trees[i].turtle;
@@ -82,6 +88,7 @@
 				this.removeTree(removeList[j]);
 			}
 			this.age ++;
+			this._isUpdating = false;
 		}
 	}
 })();

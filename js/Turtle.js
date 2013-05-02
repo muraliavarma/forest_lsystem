@@ -22,6 +22,7 @@
 		_sceneChildren: [],
 		results: [],
 		run: function(cmd, opts) {
+			console.log(this.idx);
 			cmd = 'A(0)' + cmd;	//to set default color to A
 			this._cmd = cmd;
 			this._idx = 0;
