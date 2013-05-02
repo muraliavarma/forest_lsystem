@@ -21,7 +21,6 @@ function onLoad() {
 
 	//sample l systems
 	var honda = new LSystem({
-		birth: 0,
 		maxAge: 10,
 		env: env,
 		axiom: 'A(1, 10)',
@@ -101,26 +100,26 @@ function onLoad() {
 	// 	}]
 	// });
 
-	var tropismTree = new LSystem({
-		iterations: 12,
-		env: env,
-		axiom: 'A(1, 5)',
-		constants: {
-			r1: 0.9,
-			r2: 0.8,
-			a1: 35,
-			a2: 35,
-			wr: 0.707
-		},
-		tropism: {
-			vector: new THREE.Vector3(0, -1, 0),
-			e: 0.1
-		},
-		rules: [{
-			lhs: 'A(s, w)',
-			rhs: '!(w)F(s)[+(30)/(137)A(s*0.8, w*0.8)][+(-10)/(-90)A(s*0.9, w*0.8)]'
-		}]
-	});
+	// var tropismTree = new LSystem({
+	// 	iterations: 12,
+	// 	env: env,
+	// 	axiom: 'A(1, 5)',
+	// 	constants: {
+	// 		r1: 0.9,
+	// 		r2: 0.8,
+	// 		a1: 35,
+	// 		a2: 35,
+	// 		wr: 0.707
+	// 	},
+	// 	tropism: {
+	// 		vector: new THREE.Vector3(0, -1, 0),
+	// 		e: 0.1
+	// 	},
+	// 	rules: [{
+	// 		lhs: 'A(s, w)',
+	// 		rhs: '!(w)F(s)[+(30)/(137)A(s*0.8, w*0.8)][+(-10)/(-90)A(s*0.9, w*0.8)]'
+	// 	}]
+	// });
 
 	var turtle = new Turtle({
 		name: 't1',
@@ -137,6 +136,11 @@ function onLoad() {
 			env.addTree(honda, turtle.clone().setPos(new THREE.Vector3(10 - i * 4, 0, 10 - j * 4)));
 		}
 	}
+
+	setInterval(function() {
+		console.log(env.trees);
+		env.run();
+	}, 500);
 
 	// env.addTree(honda, turtle);
 	// env.addTree(honda.clone(), turtle.clone().setPos(new THREE.Vector3(10, 0, 0)));

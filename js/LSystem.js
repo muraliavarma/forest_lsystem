@@ -33,21 +33,6 @@
 			var growth = this.growth;
 			var env = this.env;
 
-			var intervalId = setInterval(function(){
-				if (turtle.results.length > 0 && idx < turtle.results.length) {
-					turtle.clear();
-					turtle.run(turtle.results[idx++], {
-						tropism: tropism,
-						growth: growth
-					});
-				}
-				if (idx >= turtle.results.length) {
-					turtle.clear();
-					env.removeTree(turtle.idx);
-					clearInterval(intervalId);
-				}
-			}, 500);
-
 			for (var i = 0; i < this.maxAge; i++) {
 				axiom = res;
 				res = '';
@@ -66,18 +51,18 @@
 				turtle.results.push(this.env.interpret(res));
 			}
 		},
-		clone: function() {
-			var opts = this._opts;
-			return new LSystem({
-				maxAge: opts.maxAge,
-				axiom: opts.axiom,
-				rules: opts.rules,
-				growth: opts.growth,
-				env: opts.env,
-				constants: opts.constants,
-				tropism: opts.tropism
-			});
-		},
+		// clone: function() {
+		// 	var opts = this._opts;
+		// 	return new LSystem({
+		// 		maxAge: opts.maxAge,
+		// 		axiom: opts.axiom,
+		// 		rules: opts.rules,
+		// 		growth: opts.growth,
+		// 		env: opts.env,
+		// 		constants: opts.constants,
+		// 		tropism: opts.tropism
+		// 	});
+		// },
 		_parametrize: function(literal, paramString) {
 			if (!paramString) {
 				return this.rules[literal] || literal;

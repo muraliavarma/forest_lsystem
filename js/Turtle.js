@@ -9,6 +9,7 @@
 		this._sceneChildren = [];
 		this.idx = -1;
 		this.results = [];
+		this.birth = 0;	//i think this should be environment's age
 	};
 
 	Turtle.prototype = {

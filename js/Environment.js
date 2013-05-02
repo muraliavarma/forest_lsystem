@@ -2,13 +2,15 @@
 	Environment = function() {
 		this._maxTrees = 25;
 		this._currIdx = 0;
+		this.age = 0;
 		var plane = new THREE.Mesh(new THREE.PlaneGeometry(100, 100, 1, 1), new THREE.MeshBasicMaterial({color: 0x222222}));
 		plane.rotation.x = -Math.PI / 2;
 		scene.add(plane);
 	};
 
 	Environment.prototype = {
-		_trees: [],
+		trees: [],
+		age: 0,
 		_maxTrees: 0,
 		interpret: function(str) {
 			var res = '';
@@ -42,14 +44,44 @@
 		},
 		addTree: function(tree, turtle) {
 			turtle.idx = this._currIdx ++;
-			this._trees.push({
+			this.trees.push({
 				tree: tree,
 				turtle: turtle
 			});
 			tree.generate(turtle);
 		},
 		removeTree: function(idx) {
-			console.log(idx);
+			var index = -1;
+			for (var i = 0; i < this.trees.length; i++) {
+				if (this.trees[i].turtle.idx == idx) {
+					index = idx;
+					break;
+				}
+			}
+			this.trees.splice(index, 1);
+		},
+		run: function() {
+			var removeList = [];
+			for (var i = 0; i < this.trees.length; i++) {
+				var turtle = this.trees[i].turtle;
+				var idx = this.age - turtle.birth;
+				var results = turtle.results;
+				if (idx >= 0 && idx < results.length) {
+					turtle.clear();
+					turtle.run(results[idx], {
+						tropism: this.trees[i].tree.tropism,
+						growth: this.trees[i].tree.growth
+					});
+				}
+				if (idx >= results.length) {
+					turtle.clear();
+					removeList.push(turtle.idx);
+				}
+			}
+			for (var j = 0; j < removeList.length; j++) {
+				this.removeTree(removeList[j]);
+			}
+			this.age ++;
 		}
 	}
 })();
