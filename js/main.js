@@ -152,7 +152,7 @@ function onLoad() {
 		if (env.trees.length < env.maxTrees) {
 			var turt = turtle.clone();
 			env.addTree(honda, turt);
-			console.log('tree created at', turt.pos);
+			// console.log('tree created at', turt.pos);
 		}
 		env.update();
 	}, 500);

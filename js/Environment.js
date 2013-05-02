@@ -1,6 +1,6 @@
 (function() {
 	Environment = function() {
-		this.maxTrees = 25;
+		this.maxTrees = 5;
 		this._currIdx = 0;
 		this.age = 0;
 		this.width = 100;
@@ -91,14 +91,34 @@
 			}
 			this._isUpdating = true;
 
-			//spawn trees here?
+			//competition between trees
 
+			var dominatedList = [];
 
-			//competition between trees?
+			for (var i = 0; i < this.trees.length; i++) {
+				var iTree = this.trees[i];
+				for (var j = i + 1; j < this.trees.length; j++) {
+					var jTree = this.trees[j];
+					// console.log(iTree.pos, jTree.pos);
+					if (Math.abs(iTree.pos.x - jTree.pos.x) < 20 && Math.abs(iTree.pos.y - jTree.pos.y) < 20) {
+						// console.log(iTree.turtle.age, jTree.turtle.age);
+						if (iTree.turtle.age > jTree.turtle.age) {
+							dominatedList.push(jTree.turtle.idx);
+						}
+						else {
+							dominatedList.push(iTree.turtle.idx);
+						}
+					}
+				}
+			}
+			// console.log(dominatedList);
 
 			var removeList = [];
-			for (var i = 0; i < this.trees.length; i++) {
+			for (i = 0; i < this.trees.length; i++) {
 				var turtle = this.trees[i].turtle;
+				if (dominatedList.indexOf(turtle.idx) >= 0 && turtle.age > 2) {
+					continue;
+				}
 				var idx = turtle.age;
 				var results = turtle.results;
 				if (idx >= 0 && idx < results.length) {
@@ -113,8 +133,8 @@
 					removeList.push(turtle.idx);
 				}
 			}
-			for (var j = 0; j < removeList.length; j++) {
-				this.removeTree(removeList[j]);
+			for (i = 0; i < removeList.length; i++) {
+				this.removeTree(removeList[i]);
 			}
 			this.age ++;
 			this._isUpdating = false;
