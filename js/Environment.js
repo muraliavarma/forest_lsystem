@@ -60,7 +60,7 @@
 			}
 			this.trees.splice(index, 1);
 		},
-		run: function() {
+		update: function() {
 			var removeList = [];
 			for (var i = 0; i < this.trees.length; i++) {
 				var turtle = this.trees[i].turtle;

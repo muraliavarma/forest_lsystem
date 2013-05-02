@@ -13,6 +13,8 @@
 			}
 		}
 		this.tropism = opts.tropism;
+		this.results = [];
+		this._isGenerated = false;
 	};
 
 	LSystem.prototype = {
@@ -23,6 +25,10 @@
 		growth: 1,
 		tropism: null,
 		generate: function(turtle) {
+			if (this._isGenerated) {
+				turtle.results = this.results.slice(0);
+				return;
+			}
 			var numRules = this.rules.length;
 			var axiom = null;
 			var res = this.axiom;
@@ -45,7 +51,10 @@
 					}
 					res += this._parametrize(left, paramString);
 				}
+				this.results.push(res);	//for caching
+				this._isGenerated = true;
 				turtle.results.push(res);
+				console.log('Generating L systems for ' + i + ' iterations');
 			}
 		},
 		// clone: function() {

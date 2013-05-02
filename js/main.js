@@ -138,7 +138,7 @@ function onLoad() {
 	}
 
 	setInterval(function() {
-		env.run();
+		env.update();
 	}, 500);
 
 	// env.addTree(honda, turtle);
