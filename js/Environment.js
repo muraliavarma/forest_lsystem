@@ -4,6 +4,9 @@
 			elevation: 100,
 			axis: new THREE.Vector3(1, 0, 0)
 		}
+		var plane = new THREE.Mesh(new THREE.PlaneGeometry(100, 100, 1, 1), new THREE.MeshBasicMaterial({color: 0x222222}));
+		plane.rotation.x = -Math.PI / 2;
+		scene.add(plane);
 	};
 
 	Environment.prototype = {

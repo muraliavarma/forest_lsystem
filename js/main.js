@@ -22,7 +22,7 @@ function onLoad() {
 	//sample l systems
 	var honda = new LSystem({
 		birth: 0,
-		maxAge: 5,
+		maxAge: 10,
 		env: env,
 		axiom: 'A(1, 10)',
 		constants: {
