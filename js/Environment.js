@@ -1,6 +1,6 @@
 (function() {
 	Environment = function() {
-		this.maxTrees = 20;
+		this.maxTrees = 50;
 		this._currIdx = 0;
 		this.age = 0;
 		this.width = 100;
@@ -49,6 +49,7 @@
 		addTree: function(tree, turtle) {
 			turtle.idx = this._currIdx ++;
 			turtle.birth = this.age;
+			turtle.remainingLife = tree.adulthood;
 			turtle.age = 0;
 			//check a good place to place the tree
 			var done = false;
@@ -111,23 +112,28 @@
 			}
 
 			var removeList = [];
+			var probability = Math.min(dominatedList.length / this.trees.length, 0.4);
 			for (i = 0; i < this.trees.length; i++) {
 				var turtle = this.trees[i].turtle;
 				if (dominatedList.indexOf(turtle.idx) >= 0 && turtle.age > 2) {
-					continue;
+					if (Math.random() < probability) {
+						continue;
+					}
 				}
-				var idx = turtle.age;
+				var age = turtle.age;
 				var results = turtle.results;
-				if (idx >= 0 && idx < results.length) {
+				if (age >= 0 && age < results.length) {
 					turtle.clear();
-					turtle.run(results[idx], {
+					turtle.run(results[age], {
 						tropism: this.trees[i].tree.tropism,
 						growth: this.trees[i].tree.growth
 					});
 				}
-				if (idx >= results.length) {
-					turtle.clear();
-					removeList.push(turtle.idx);
+				if (age >= results.length) {
+					if (turtle.remainingLife-- <= 0) {
+						turtle.clear();
+						removeList.push(turtle.idx);
+					}
 				}
 			}
 			for (i = 0; i < removeList.length; i++) {

@@ -1,5 +1,6 @@
 function onLoad() {
 
+	isPaused = false;
 	scene = new THREE.Scene();
 	var fov = 75;
 	var near = 1;
@@ -57,7 +58,8 @@ function onLoad() {
 	for (var i = 0; i < 4; i ++) {
 		hondas.push(new LSystem({
 			maxAge: 10,
-			axiom: 'A(1, 10)',
+			adulthood: 10,
+			axiom: 'A(1, 5)',
 			constants: hondaConstants[i],
 			tropism: {
 				vector: new THREE.Vector3(0, -1, 0),
@@ -159,35 +161,25 @@ function onLoad() {
 		}
 	});
 
-	// for (var i = 0; i < 3; i++) {
-	// 	for (var j = 0; j < 2; j++) {
-	// 		env.addTree(honda, turtle.clone().setPos(new THREE.Vector3(6 - i, 0, j)));
-	// 	}
+	//init with a lot of trees at the start
+	// while (env.trees.length < env.maxTrees) {
+	// 	console.log(env.trees.length);
+	// 	var turt = turtle.clone();
+	// 	env.addTree(hondas[parseInt(Math.random() * 4)], turt);
+	// 	env.update();
 	// }
 
-	// var i = 0, j = 0, done = false;
-
 	setInterval(function() {
-		// if (j == 2) {
-		// 	j = 0;
-		// 	i ++;
-		// }
-		// if (i >= 3) {
-		// 	done = true;
-		// }
-		// j ++;
-		// if (!done) {
+		if (isPaused) {
+			return;
+		}
 		if (env.trees.length < env.maxTrees) {
 			var turt = turtle.clone();
 			env.addTree(hondas[parseInt(Math.random() * 4)], turt);
-			// console.log('tree created at', turt.pos);
 		}
 		env.update();
 	}, 500);
 
-	// env.addTree(honda, turtle);
-	// env.addTree(honda.clone(), turtle.clone().setPos(new THREE.Vector3(10, 0, 0)));
-	
 	container.onmousewheel = function() {
 		controls.update();
 	}
@@ -211,4 +203,8 @@ function render() {
 function animate() {
 	requestAnimationFrame(animate);
 	render();
+}
+
+function pause() {
+	isPaused = !isPaused;
 }

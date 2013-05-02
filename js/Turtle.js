@@ -11,6 +11,7 @@
 		this.results = [];
 		this.birth = 0;
 		this.age = -1;
+		this.remainingLife = -1;
 	};
 
 	Turtle.prototype = {

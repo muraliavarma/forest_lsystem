@@ -2,6 +2,7 @@
 	LSystem = function(opts) {
 		this._opts = opts;
 		this.maxAge = opts.maxAge;
+		this.adulthood = opts.adulthood;
 		this.axiom = opts.axiom;
 		this.rules = {};
 		this.growth = opts.growth;
@@ -19,6 +20,7 @@
 
 	LSystem.prototype = {
 		maxAge: 1,
+		adulthood: 1,
 		age: 0,
 		axiom: null,
 		rules: null,
