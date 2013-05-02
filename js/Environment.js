@@ -1,9 +1,11 @@
 (function() {
 	Environment = function() {
-		this._maxTrees = 25;
+		this.maxTrees = 25;
 		this._currIdx = 0;
 		this.age = 0;
-		var plane = new THREE.Mesh(new THREE.PlaneGeometry(100, 100, 1, 1), new THREE.MeshBasicMaterial({color: 0x222222}));
+		this.width = 100;
+		this.height = 100;
+		var plane = new THREE.Mesh(new THREE.PlaneGeometry(this.width, this.height, 1, 1), new THREE.MeshBasicMaterial({color: 0x222222}));
 		plane.rotation.x = -Math.PI / 2;
 		scene.add(plane);
 		this._isUpdating = false;
@@ -12,7 +14,7 @@
 	Environment.prototype = {
 		trees: [],
 		age: 0,
-		_maxTrees: 0,
+		maxTrees: 0,
 		_isUpdating: false,
 		// interpret: function(str) {
 		// 	var res = '';
@@ -48,9 +50,28 @@
 			turtle.idx = this._currIdx ++;
 			turtle.birth = this.age;
 			turtle.age = 0;
+			//check a good place to place the tree
+			var done = false;
+			var posX;
+			var posY;
+			while(!done) {
+				posX = this.width / 2 - parseInt(this.width * Math.random());
+				posY = this.height / 2 - parseInt(this.height * Math.random());
+				for (var i = 0; i < this.trees.length; i++) {
+					if (posX == this.trees[i].pos.x && posY == this.trees[i].pos.y) {
+						break;
+					}
+				}
+				done = true;
+			}
+			turtle.setPos(new THREE.Vector3(posX, 0, posY));
 			this.trees.push({
 				tree: tree,
-				turtle: turtle
+				turtle: turtle,
+				pos: {
+					x: posX,
+					y: posY
+				}
 			});
 			tree.generate(turtle);
 		},
@@ -69,6 +90,11 @@
 				return;
 			}
 			this._isUpdating = true;
+
+			//spawn trees here?
+
+
+			//competition between trees?
 
 			var removeList = [];
 			for (var i = 0; i < this.trees.length; i++) {

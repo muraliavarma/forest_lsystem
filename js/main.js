@@ -6,7 +6,7 @@ function onLoad() {
 	var far = 100000;
 
 	camera = new THREE.PerspectiveCamera(fov, 1, near, far);
-	camera.position = new THREE.Vector3(0, 5, 15);
+	camera.position = new THREE.Vector3(0, 50, 100);
 
 	var container = document.getElementById('canvasContainer');
 	renderer = new THREE.WebGLRenderer();
@@ -36,7 +36,7 @@ function onLoad() {
 			vector: new THREE.Vector3(0, -1, 0),
 			e: 0.27
 		},
-		growth: 1,
+		growth: 5,
 		rules: [{
 			lhs: 'A(l, w)',
 			rhs: '!(w)F(l)[&(a0)B(l*r2, w*wr)]/(d)A(l*r1, w*wr)'
@@ -137,20 +137,22 @@ function onLoad() {
 	// 	}
 	// }
 
-	var i = 0, j = 0, done = false;
+	// var i = 0, j = 0, done = false;
 
 	setInterval(function() {
-		if (j == 2) {
-			j = 0;
-			i ++;
-		}
-		if (i >= 3) {
-			done = true;
-		}
-		j ++;
-		if (!done) {
-			env.addTree(honda, turtle.clone().setPos(new THREE.Vector3(6 - i, 0, j)));
-			console.log('tree created', i, j);
+		// if (j == 2) {
+		// 	j = 0;
+		// 	i ++;
+		// }
+		// if (i >= 3) {
+		// 	done = true;
+		// }
+		// j ++;
+		// if (!done) {
+		if (env.trees.length < env.maxTrees) {
+			var turt = turtle.clone();
+			env.addTree(honda, turt);
+			console.log('tree created at', turt.pos);
 		}
 		env.update();
 	}, 500);
