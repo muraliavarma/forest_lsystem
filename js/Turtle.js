@@ -8,6 +8,7 @@
 		this.pen = opts.pen;
 		this._sceneChildren = [];
 		this.idx = -1;
+		this.results = [];
 	};
 
 	Turtle.prototype = {
@@ -18,6 +19,7 @@
 		_stack: [],
 		_lines: {},
 		_sceneChildren: [],
+		results: [],
 		run: function(cmd, opts) {
 			cmd = 'A(0)' + cmd;	//to set default color to A
 			this._cmd = cmd;

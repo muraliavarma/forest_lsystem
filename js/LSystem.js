@@ -28,21 +28,20 @@
 			var numRules = this.rules.length;
 			var axiom = null;
 			var res = this.axiom;
-			var results = [];
 			var idx = 0;
 			var tropism = this.tropism;
 			var growth = this.growth;
 			var env = this.env;
 
 			var intervalId = setInterval(function(){
-				if (results.length > 0 && idx < results.length) {
+				if (turtle.results.length > 0 && idx < turtle.results.length) {
 					turtle.clear();
-					turtle.run(results[idx++], {
+					turtle.run(turtle.results[idx++], {
 						tropism: tropism,
 						growth: growth
 					});
 				}
-				if (idx >= results.length) {
+				if (idx >= turtle.results.length) {
 					turtle.clear();
 					env.removeTree(turtle.idx);
 					clearInterval(intervalId);
@@ -64,7 +63,7 @@
 					}
 					res += this._parametrize(left, paramString);
 				}
-				results.push(this.env.interpret(res));
+				turtle.results.push(this.env.interpret(res));
 			}
 		},
 		clone: function() {
