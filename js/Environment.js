@@ -1,11 +1,11 @@
 (function() {
 	Environment = function() {
-		this.maxTrees = 5;
+		this.maxTrees = 20;
 		this._currIdx = 0;
 		this.age = 0;
 		this.width = 100;
 		this.height = 100;
-		var plane = new THREE.Mesh(new THREE.PlaneGeometry(this.width, this.height, 1, 1), new THREE.MeshBasicMaterial({color: 0x555555}));
+		var plane = new THREE.Mesh(new THREE.PlaneGeometry(this.width, this.height, 1, 1), new THREE.MeshBasicMaterial({color: 0x5c4033}));
 		plane.rotation.x = -Math.PI / 2;
 		scene.add(plane);
 		this._isUpdating = false;

@@ -1,7 +1,7 @@
 function onLoad() {
 
 	scene = new THREE.Scene();
-	var fov = 90;
+	var fov = 75;
 	var near = 1;
 	var far = 100000;
 
@@ -10,8 +10,8 @@ function onLoad() {
 
 	var container = document.getElementById('canvasContainer');
 	renderer = new THREE.WebGLRenderer();
-	renderer.setClearColorHex(0x228888);
-	renderer.setSize(500, 500);
+	renderer.setClearColorHex(0x000000);
+	renderer.setSize(1000, 600);
 	container.appendChild(renderer.domElement);
 
 	controls = new THREE.TrackballControls(camera);
@@ -21,44 +21,72 @@ function onLoad() {
 	var env = new Environment();
 
 	//sample l systems
-	var honda = new LSystem({
-		maxAge: 10,
-		axiom: 'A(1, 10)',
-		constants: {
-			r1: 0.9,
-			r2: 0.6,
-			a0: 45,
-			a2: 45,
-			d: 137.5,
-			wr: 0.707
-		},
-		tropism: {
-			vector: new THREE.Vector3(0, -1, 0),
-			e: 0.27
-		},
-		growth: 5,
-		rules: [{
-			lhs: 'A(l, w)',
-			rhs: '!(w)F(l)[&(a0)B(l*r2, w*wr)]/(d)A(l*r1, w*wr)'
-		},{
-			lhs: 'B(l, w)',
-			rhs: '!(w)L(0)F(l)[+(-a2)$C(l*r2, w*wr)]C(l*r1, w*wr)'
-		},{
-			lhs: 'C(l, w)',
-			rhs: '!(w)L(0)F(l)[+(a2)$B(l*r2, w*wr)]B(l*r1, w*wr)'
-		}]
-	});
+
+	var hondaConstants = [{
+		r1: 0.9,
+		r2: 0.6,
+		a0: 45,
+		a2: 45,
+		d: 137.5,
+		wr: 0.707
+	},{
+		r1: 0.9,
+		r2: 0.9,
+		a0: 45,
+		a2: 45,
+		d: 137.5,
+		wr: 0.707
+	},{
+		r1: 0.9,
+		r2: 0.8,
+		a0: 45,
+		a2: 45,
+		d: 137.5,
+		wr: 0.707
+	},{
+		r1: 0.9,
+		r2: 0.7,
+		a0: 30,
+		a2: -30,
+		d: 137.5,
+		wr: 0.707
+	}];
+
+	var hondas = [];
+
+	for (var i = 0; i < 4; i ++) {
+		hondas.push(new LSystem({
+			maxAge: 10,
+			axiom: 'A(1, 10)',
+			constants: hondaConstants[i],
+			tropism: {
+				vector: new THREE.Vector3(0, -1, 0),
+				e: 0.27
+			},
+			growth: 5,
+			rules: [{
+				lhs: 'A(l, w)',
+				rhs: '!(w)F(l)[&(a0)B(l*r2, w*wr)]/(d)A(l*r1, w*wr)'
+			},{
+				lhs: 'B(l, w)',
+				rhs: '!(w)L(0)F(l)[+(-a2)$C(l*r2, w*wr)]C(l*r1, w*wr)'
+			},{
+				lhs: 'C(l, w)',
+				rhs: '!(w)L(0)F(l)[+(a2)$B(l*r2, w*wr)]B(l*r1, w*wr)'
+			}]
+		}));
+	}
 
 	var aano = new LSystem({
 		maxAge: 10,
 		axiom: 'A(2, 10)',
-		constants: {
+		constants: [{
 			r1: 0.9,
 			r2: 0.8,
 			a1: 35,
 			a2: 35,
 			wr: 0.707
-		},
+		}],
 		tropism: {
 			vector: new THREE.Vector3(0, -1, 0),
 			e: 0.27
@@ -69,7 +97,7 @@ function onLoad() {
 			rhs: '!(w)F(l)[&(a1)B(l*r1, w*wr)]/(180)[&(a2)B(l*r2, w*wr)]'
 		},{
 			lhs: 'B(l, w)',
-			rhs: '!(w)F(l)[+(a1)$B(l*r1, w*wr)][+(-a2)$B(l*r2, w*wr)]'
+			rhs: '!(w)L(0)F(l)[+(a1)$B(l*r1, w*wr)][+(-a2)$B(l*r2, w*wr)]'
 		}]
 	});
 
@@ -151,7 +179,7 @@ function onLoad() {
 		// if (!done) {
 		if (env.trees.length < env.maxTrees) {
 			var turt = turtle.clone();
-			env.addTree(honda, turt);
+			env.addTree(hondas[parseInt(Math.random() * 4)], turt);
 			// console.log('tree created at', turt.pos);
 		}
 		env.update();
