@@ -5,7 +5,6 @@
 		this.axiom = opts.axiom;
 		this.rules = {};
 		this.growth = opts.growth;
-		this.env = opts.env;
 		for (var i = 0; i < opts.rules.length; i++) {
 			var rule = opts.rules[i];
 			this.rules[rule.lhs] = rule.rhs;
@@ -23,7 +22,6 @@
 		rules: null,
 		growth: 1,
 		tropism: null,
-		env: null,
 		generate: function(turtle) {
 			var numRules = this.rules.length;
 			var axiom = null;
@@ -31,7 +29,6 @@
 			var idx = 0;
 			var tropism = this.tropism;
 			var growth = this.growth;
-			var env = this.env;
 
 			for (var i = 0; i < this.maxAge; i++) {
 				axiom = res;
@@ -48,7 +45,7 @@
 					}
 					res += this._parametrize(left, paramString);
 				}
-				turtle.results.push(this.env.interpret(res));
+				turtle.results.push(res);
 			}
 		},
 		// clone: function() {

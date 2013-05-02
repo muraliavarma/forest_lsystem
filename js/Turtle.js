@@ -138,6 +138,8 @@
 		setPos: function(vec) {
 			this.pos = vec;
 			this._opts.pos = this.pos.clone();
+			this.birth = parseInt(Math.random() * 20);
+			console.log(this.birth);
 			return this;
 		},
 		clone: function() {

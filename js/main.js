@@ -22,7 +22,7 @@ function onLoad() {
 	//sample l systems
 	var honda = new LSystem({
 		maxAge: 10,
-		env: env,
+		// env: env,
 		axiom: 'A(1, 10)',
 		constants: {
 			r1: 0.9,
@@ -138,7 +138,6 @@ function onLoad() {
 	}
 
 	setInterval(function() {
-		console.log(env.trees);
 		env.run();
 	}, 500);
 
