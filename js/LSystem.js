@@ -14,11 +14,9 @@
 			}
 		}
 		this.tropism = opts.tropism;
-		this.idx = -1;
 	};
 
 	LSystem.prototype = {
-		idx: -1,
 		maxAge: 1,
 		age: 0,
 		axiom: null,
@@ -35,7 +33,6 @@
 			var tropism = this.tropism;
 			var growth = this.growth;
 			var env = this.env;
-			var treeIdx = this.idx;
 
 			var intervalId = setInterval(function(){
 				if (results.length > 0 && idx < results.length) {
@@ -47,7 +44,7 @@
 				}
 				if (idx >= results.length) {
 					turtle.clear();
-					env.removeTree(treeIdx);
+					env.removeTree(turtle.idx);
 					clearInterval(intervalId);
 				}
 			}, 500);

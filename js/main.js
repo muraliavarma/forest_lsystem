@@ -134,7 +134,7 @@ function onLoad() {
 
 	for (var i = 0; i < 2; i++) {
 		for (var j = 0; j < 2; j++) {
-			env.addTree(honda.clone(),turtle.clone().setPos(new THREE.Vector3(10 - i * 4, 0, 10 - j * 4)));
+			env.addTree(honda, turtle.clone().setPos(new THREE.Vector3(10 - i * 4, 0, 10 - j * 4)));
 		}
 	}
 

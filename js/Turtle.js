@@ -7,9 +7,11 @@
 		this.up = opts.up.clone();
 		this.pen = opts.pen;
 		this._sceneChildren = [];
+		this.idx = -1;
 	};
 
 	Turtle.prototype = {
+		idx: -1,
 		pos: null,
 		dir: null,
 		pen: null,

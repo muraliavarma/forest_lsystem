@@ -41,7 +41,7 @@
 			return res;
 		},
 		addTree: function(tree, turtle) {
-			tree.idx = this._currIdx ++;
+			turtle.idx = this._currIdx ++;
 			this._trees.push({
 				tree: tree,
 				turtle: turtle
