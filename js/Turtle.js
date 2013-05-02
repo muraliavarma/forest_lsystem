@@ -128,6 +128,7 @@
 				var sceneChild = this._sceneChildren.pop();
 				scene.remove(sceneChild);
 			}
+			render();
 		},
 		setPos: function(vec) {
 			this.pos = vec;

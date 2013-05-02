@@ -14,9 +14,11 @@
 			}
 		}
 		this.tropism = opts.tropism;
+		this.idx = -1;
 	};
 
 	LSystem.prototype = {
+		idx: -1,
 		maxAge: 1,
 		age: 0,
 		axiom: null,
@@ -32,14 +34,21 @@
 			var idx = 0;
 			var tropism = this.tropism;
 			var growth = this.growth;
+			var env = this.env;
+			var treeIdx = this.idx;
 
-			setInterval(function(){
+			var intervalId = setInterval(function(){
 				if (results.length > 0 && idx < results.length) {
 					turtle.clear();
 					turtle.run(results[idx++], {
 						tropism: tropism,
 						growth: growth
 					});
+				}
+				if (idx >= results.length) {
+					turtle.clear();
+					env.removeTree(treeIdx);
+					clearInterval(intervalId);
 				}
 			}, 500);
 
@@ -58,7 +67,6 @@
 					}
 					res += this._parametrize(left, paramString);
 				}
-				// res = ;
 				results.push(this.env.interpret(res));
 			}
 		},

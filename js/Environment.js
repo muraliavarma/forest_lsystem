@@ -1,17 +1,15 @@
 (function() {
 	Environment = function() {
-		this._sun = {
-			elevation: 100,
-			axis: new THREE.Vector3(1, 0, 0)
-		}
+		this._maxTrees = 25;
+		this._currIdx = 0;
 		var plane = new THREE.Mesh(new THREE.PlaneGeometry(100, 100, 1, 1), new THREE.MeshBasicMaterial({color: 0x222222}));
 		plane.rotation.x = -Math.PI / 2;
 		scene.add(plane);
 	};
 
 	Environment.prototype = {
-		_sun: {},
 		_trees: [],
+		_maxTrees: 0,
 		interpret: function(str) {
 			var res = '';
 			for (var i = 0; i < str.length; i++) {
@@ -43,8 +41,15 @@
 			return res;
 		},
 		addTree: function(tree, turtle) {
-			this._trees.push(tree);
+			tree.idx = this._currIdx ++;
+			this._trees.push({
+				tree: tree,
+				turtle: turtle
+			});
 			tree.generate(turtle);
+		},
+		removeTree: function(idx) {
+			console.log(idx);
 		}
 	}
 })();

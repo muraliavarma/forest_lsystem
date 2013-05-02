@@ -132,14 +132,14 @@ function onLoad() {
 		}
 	});
 
-	for (var i = 0; i < 5; i++) {
-		for (var j = 0; j < 5; j++) {
-			// honda.generate(turtle.clone().setPos(new THREE.Vector3(i * 4, 0, j * 4)));
+	for (var i = 0; i < 2; i++) {
+		for (var j = 0; j < 2; j++) {
+			env.addTree(honda.clone(),turtle.clone().setPos(new THREE.Vector3(10 - i * 4, 0, 10 - j * 4)));
 		}
 	}
 
-	env.addTree(honda, turtle);
-	env.addTree(honda.clone(), turtle.clone().setPos(new THREE.Vector3(10, 0, 0)));
+	// env.addTree(honda, turtle);
+	// env.addTree(honda.clone(), turtle.clone().setPos(new THREE.Vector3(10, 0, 0)));
 	
 	container.onmousewheel = function() {
 		controls.update();
