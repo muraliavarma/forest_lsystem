@@ -5,7 +5,7 @@
 		this.age = 0;
 		this.width = 100;
 		this.height = 100;
-		var plane = new THREE.Mesh(new THREE.PlaneGeometry(this.width, this.height, 1, 1), new THREE.MeshBasicMaterial({color: 0x5c4033}));
+		var plane = new THREE.Mesh(new THREE.PlaneGeometry(10 * this.width, 10 * this.height, 1, 1), new THREE.MeshBasicMaterial({color: 0x5c4033}));
 		plane.rotation.x = -Math.PI / 2;
 		scene.add(plane);
 		this._isUpdating = false;
@@ -50,6 +50,7 @@
 			turtle.idx = this._currIdx ++;
 			turtle.birth = this.age;
 			turtle.remainingLife = tree.adulthood;
+			turtle.adulthood = tree.adulthood;
 			turtle.age = 0;
 			//check a good place to place the tree
 			var done = false;
@@ -93,9 +94,7 @@
 			this._isUpdating = true;
 
 			//competition between trees
-
 			var dominatedList = [];
-
 			for (var i = 0; i < this.trees.length; i++) {
 				var iTree = this.trees[i];
 				for (var j = i + 1; j < this.trees.length; j++) {
@@ -130,9 +129,15 @@
 					});
 				}
 				if (age >= results.length) {
+					turtle.clear();
 					if (turtle.remainingLife-- <= 0) {
-						turtle.clear();
 						removeList.push(turtle.idx);
+					}
+					else {
+						turtle.run(results[results.length - 1], {
+							tropism: this.trees[i].tree.tropism,
+							growth: this.trees[i].tree.growth
+						});
 					}
 				}
 			}

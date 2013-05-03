@@ -12,6 +12,7 @@
 		this.birth = 0;
 		this.age = -1;
 		this.remainingLife = -1;
+		this.adulthood = -1;
 	};
 
 	Turtle.prototype = {
@@ -93,25 +94,32 @@
 						this._popStack();
 						break;
 					case 'L':
-						this.pen.color = 0x004000;
+						if (this.remainingLife < 0) {
+							this.pen.color = '#004000';
+						}
+						else {
+							var r = parseInt(64 * (1 - this.remainingLife / this.adulthood));
+							var g = parseInt(16 + 48 * (this.remainingLife / this.adulthood));
+							this.pen.color = 'rgb(' + r + ',' + g + ',0)';
+						}
 						this._getParam();
 						break;
 					case 'A':
-						this.pen.color = 0x3c2013;
+						this.pen.color = '#3c2013';
 						this._getParam();
 						break;
 					case 'B':
-						this.pen.color = 0x3c2013;
+						this.pen.color = '#3c2013';
 						// this.pen.color = 0x6c4033;
 						this._getParam();
 						break;
 					case 'C':
-						this.pen.color = 0x3c2013;
+						this.pen.color = '#3c2013';
 						// this.pen.color = 0x7c4033;
 						this._getParam();
 						break;
 					case 'D':
-						this.pen.color = 0xffff00;
+						this.pen.color = '#ffff00';
 						this._getParam();
 						break;
 					case '!':
@@ -172,7 +180,7 @@
 				var color = keySplit[0];
 				var width = keySplit[1];
 				var material = new THREE.LineBasicMaterial({
-					color: new THREE.Color().setHex(color),
+					color: new THREE.Color().setStyle(color),
 					linewidth: width
 				});
 				var geometry = new THREE.Geometry();

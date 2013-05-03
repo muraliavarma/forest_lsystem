@@ -63,7 +63,7 @@ function onLoad() {
 			constants: hondaConstants[i],
 			tropism: {
 				vector: new THREE.Vector3(0, -1, 0),
-				e: 0.27
+				e: 0.1
 			},
 			growth: 5,
 			rules: [{
@@ -81,14 +81,15 @@ function onLoad() {
 
 	var aano = new LSystem({
 		maxAge: 10,
-		axiom: 'A(2, 10)',
-		constants: [{
+		adulthood: 50,
+		axiom: 'A(2, 5)',
+		constants: {
 			r1: 0.9,
 			r2: 0.8,
 			a1: 35,
 			a2: 35,
 			wr: 0.707
-		}],
+		},
 		tropism: {
 			vector: new THREE.Vector3(0, -1, 0),
 			e: 0.27
@@ -169,6 +170,7 @@ function onLoad() {
 	// 	env.update();
 	// }
 
+	//forest
 	setInterval(function() {
 		if (isPaused) {
 			return;
@@ -179,6 +181,19 @@ function onLoad() {
 		}
 		env.update();
 	}, 500);
+
+	//aano
+	// env.maxTrees = 1;
+	// setInterval(function() {
+	// 	if (isPaused) {
+	// 		return;
+	// 	}
+	// 	if (env.trees.length < env.maxTrees) {
+	// 		var turt = turtle.clone();
+	// 		env.addTree(aano, turt);
+	// 	}
+	// 	env.update();
+	// }, 500);
 
 	container.onmousewheel = function() {
 		controls.update();
