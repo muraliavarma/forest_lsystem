@@ -99,23 +99,26 @@
 				var iTree = this.trees[i];
 				for (var j = i + 1; j < this.trees.length; j++) {
 					var jTree = this.trees[j];
-					if (Math.abs(iTree.pos.x - jTree.pos.x) < 20 && Math.abs(iTree.pos.y - jTree.pos.y) < 20) {
-						if (iTree.turtle.age > jTree.turtle.age) {
-							dominatedList.push(jTree.turtle.idx);
+					if (Math.abs(iTree.pos.x - jTree.pos.x) < 50 && Math.abs(iTree.pos.y - jTree.pos.y) < 50) {
+						if (iTree.turtle.age > jTree.turtle.age && iTree.turtle.remainingLife == iTree.turtle.adulthood) {
+							if (dominatedList.indexOf(jTree.turtle.idx) < 0) {
+								dominatedList.push(jTree.turtle.idx);
+							}
 						}
-						else {
-							dominatedList.push(iTree.turtle.idx);
+						else if (jTree.turtle.age > iTree.turtle.age && jTree.turtle.remainingLife == jTree.turtle.adulthood){
+							if (dominatedList.indexOf(iTree.turtle.idx) < 0) {
+								dominatedList.push(iTree.turtle.idx);
+							}
 						}
 					}
 				}
 			}
-
 			var removeList = [];
-			var probability = Math.min(dominatedList.length / this.trees.length, 0.4);
+			var probability = 0;//Math.min(dominatedList.length / this.trees.length, 0.3);
 			for (i = 0; i < this.trees.length; i++) {
 				var turtle = this.trees[i].turtle;
-				if (dominatedList.indexOf(turtle.idx) >= 0 && turtle.age > 2) {
-					if (Math.random() < probability) {
+				if (dominatedList.indexOf(turtle.idx) >= 0 && turtle.age > 4) {
+					if (Math.random() > probability) {
 						continue;
 					}
 				}
