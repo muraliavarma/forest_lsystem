@@ -162,14 +162,6 @@ function onLoad() {
 		}
 	});
 
-	//init with a lot of trees at the start
-	// while (env.trees.length < env.maxTrees) {
-	// 	// console.log(env.trees.length);
-	// 	var turt = turtle.clone();
-	// 	env.addTree(hondas[parseInt(Math.random() * 4)], turt);
-	// 	// env.update();
-	// }
-
 	//forest
 	setInterval(function() {
 		if (isPaused) {
@@ -194,6 +186,17 @@ function onLoad() {
 	// 		var turt = turtle.clone();
 	// 		env.addTree(aano, turt);
 	// 	}
+	// 	env.update();
+	// }, 500);
+
+	//hondas
+	// env.maxTrees = 4;
+	// for (var i = 0; i < 4; i ++) {
+	// 	var turt = turtle.clone();
+	// 	turt.setPos(new THREE.Vector3(i * 45, 0, 0));
+	// 	env.addTree(hondas[i], turt);
+	// }
+	// setInterval(function() {	
 	// 	env.update();
 	// }, 500);
 
