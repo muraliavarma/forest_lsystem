@@ -1,0 +1,233 @@
+<html>
+	<head>
+		<title>L System Forest Simulation</title>
+		<style type="text/css">
+			html{
+				background:#000000;
+				color:#AAAAAA;
+				text-align: justify;
+			}
+
+			body{
+				width: 800px;
+				margin: 0 auto;
+			}
+
+			header{
+				display: block;
+				color:#DDDDDD;
+			}
+
+			h1,h3{
+				text-align:center;
+			}
+
+			h4{
+				text-align: right;
+			}
+			
+			#contents{
+				background-color: #222222;
+				border-color: #555555;
+				border-style:solid;
+				border-width:1px;
+				width: 200px;
+				padding-left: 0px;
+				padding-top: 3px;
+				padding-bottom: 1px;
+			}
+			
+			#contents b{
+				padding-left: 65px;
+			}
+			
+			a{
+				color: #555555;
+			}
+			
+			hr{
+				border-color: #888888;
+			}
+			
+			.floatRight{
+				float: right;
+				margin-left: 10px;
+			}
+			
+			.floatLeft{
+				float: left;
+				margin-right: 10px;
+			}
+			
+			.top{
+				float: right;
+				margin-right: 10px;
+				font-size: 13;
+			}
+			
+			img.center {
+				display: block;
+				margin-left: auto;
+				margin-right: auto;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<a link="top"/>
+		<header>
+			<h1>L-System Simulation of Forests</h1>
+			<h3>Murali Varma</h3>
+			<h3>Suraj Sirpilli</h3>
+		</header>
+		<div style="text-align:center">
+			<img src="images/cover.png" class="center">
+		</div>
+		<h4><a href="http://murlax.com/forest">Online Demo (requires Google Chrome/WebGL)</a></h4>
+		<br/>
+		<br/>
+		<div id="contents">
+		<b>Contents</b>
+		<ol>
+			<li><a href="#intro">Introduction</a>
+			<li><a href="#theory">Theory</a>
+			<li><a href="#results">Results</a>
+			<li><a href="#conclusion">Conclusion</a>
+			<li><a href="#references">References</a>
+		</ol>
+		</div>
+		<br/><a href="#top" class="top">top</a><br/>
+		<hr>
+		<a name="intro">Introduction</a><br/>
+		<p>
+			L-System Simulation of Forests aims at simulating growth of trees in a forest based on their position in the environment. We use parameteric L-Systems for simulating tree growth. We have also implemented geotropism in plants. Growth of a tree is dependent on competition for resorurses and results in domination by the stronger (bigger) tree over the smaller ones.
+		<br/><a href="#top" class="top">top</a><br/>
+		<hr/>		
+		<a name="theory">Theory</a><br/>
+			<br/>
+			<i>L-systems</i>
+			<br/>
+			<img class="floatRight" src="images/lsystem.png" style="height: 220px;">
+			Lindenmayer systems or L-systems is a rewriting system.
+			In general, rewriting is a technique for defining complex objects by successively replacing parts of a simple initial object using a set of rewriting rules or productions. L-systems operate on character strings.
+			Like any rewriting systems L-systems also consist of production rules but what makes them different is unlike other the production rules are applied parallelly, this makes L-systems apt for depicting biological simulations.
+			<br/><br/>
+			L-systems consist of 3 main components. Values in paranthesis produces string shown on the right
+				<ul>
+				<li>Alphabets (a, b)
+				<li>Axiom (b)
+				<li>Set of Production Rules (a -> ab)
+				</ul>
+			<i>Turtle Interpretation</i>
+			<br/>
+			<img class="floatRight" src="images/turtle.png" style="height: 350px;">
+			Turtle is the geometric interpretation applied to the strings to generate schematic images.
+			A state of turtle is defined as a triplet (x,y,alpha) where :
+				(x,y) represent turtle's position and 
+				angle alpha called 'heading' represents the 
+				direction turtle is facing 
+				Now this information can be used to simulate further steps by providing:
+				<ul>
+				<li>d : stepsize
+				<li>delta : angle increment
+				</ul>
+			Turtle can be extended to 3D by using 3 vectors to represent the current orientation of the turtle in space.
+			</br>
+			<ul>
+			<li>H : Heading
+			<li>U : Up
+			<li>L : Left side of turtle
+			</ul>
+			These vectors have unit length and are perpendicular to each other. They also satisfy
+			<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>H X L = U</b>
+			<br/><br/>
+			Following symbols are used to control the orientation of turtle in space:
+			<br/>
+			<ul>
+			<li>+	:	Turn left by angle d
+			<li>- 	:	Turn right by angle d
+			<li>&	:	Pitch down by angle d
+			<li>?	:	Pitch up by angle d
+			<li>\ 	:	Roll left by angle d
+			<li>/ 	:	Roll right by angle d
+			<li>| 	:	Turn around
+			</ul>
+			<i>Parametric L-systems</i>
+			<br/>
+			<img class="floatRight" src="images/aano1.png" style="height: 100px;">
+			 L-systems limit reduction of lines and angles to multiples of unit segments. To overcome this limitation we use Parametric L-systems.Parametric L-systems operate on parametric words which are strings of modules of letters with associated parameters.
+			<br/>
+			A parametric L-system is defined as an ordered quadruple
+			<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<b>G = < V, S, w, P ></b>
+			<br/>
+			where:
+			<ul>
+			<li>V is the alphabet of the system
+			<li>S is the set of formal parameters
+			<li>wi s the axiom
+			<li>P is the set of formal parameters
+			</ul>
+			<br/><br/>
+			<i>Geotropism</i>
+			<br/>
+			<img class="floatRight" src="images/aano2.png" style="height: 100px;">
+			It  is the phenomenon of turning of plants towards gravity. In order to show geotropism we require Tropism Vector (T)
+			<br/>
+			The orientation adjustment alpha is calculated using the formula
+			<br/><br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>alpha = e |H ×T|</b>
+			<br/><br/>
+			where :
+			<ul>
+			<li>e is the parameter capturing axis' susceptibility to bend
+			<li>T can be seen as the force applied to H.
+			</ul>
+			Once H is changed we adjust L and U accordingly
+			<br/><br/><br/>
+			<i>Forests</i>
+			<br/>
+			To generate forests, we randomly seed the forest floor. We then cap the maximum number of trees possible. Trees can vary in size (length, diameter).
+			Growth of the trees is determined by the surroundings. Growth of a smaller tree is hindered by a bigger tree next to it. Trees grow till a max age and then die at which point a new tree is grown at a random location on the forest floor.
+			<br/>
+			<a href="#top" class="top">top</a><br/>
+		<hr/>		
+		<a name="results">Results</a><br/><br/>
+		<p>
+			<img src="images/forest1.png" style="height: 400px;">
+			<br/>
+			Forest overview with colors denoting the age of trees
+			<br/>
+			<br/>
+			<img src="images/forest2.png" style="height: 472px;">
+			<br/>
+			Another view of a randomly generated forest
+			<br/>
+			<br/>
+			<img src="images/honda1.png" style="height: 127px;">
+			<br/>
+			Honda trees generated with varying parameters
+			<br/>
+			<br/>
+			<img src="images/honda2.png" style="height: 163px;">			
+			<br/>
+			The same Honda trees as above, but with GeoTropism
+			<br/>
+		<a href="#top" class="top">top</a><br/>
+		<hr/>		
+		<a name="conclusion">Conclusion</a><br/><br/>	
+		Open L-sytems used in the project can be effectively used to generate a wide variety of trees. We can further make use of various techniques for generation of forests.	A variety of factors affect the growth of trees in a forest. In this project we consider competition among trees as the deciding factor. The methods implemented by us have mostly been referenced from Dr. Przemyslaw Pruisnkiewicz's papers.
+		<br/><a href="#top" class="top">top</a><br/>
+		<hr/>
+		<a name="references">References</a><br/>
+		<ul>
+			<li><a href="http://dl.acm.org/citation.cfm?id=192254">Synthetic Topiary </a>
+			<li><a href="http://dl.acm.org/citation.cfm?id=74351">Voxel Space Automata: Modeling with stochastic growth processes in voxel space</a>
+			<li><a href="http://dl.acm.org/citation.cfm?id=237279">Visual models of plants interacting with their environment</a>
+			<li><a href="http://algorithmicbotany.org/papers/abop/abop-ch2.pdf">Algorithmic Beauty Of Plants - Ch 2</a>
+		</ul>
+		<br/><a href="#top" class="top">top</a><br/>
+		<hr/>
+	</body>
+</html>
