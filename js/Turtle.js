@@ -94,14 +94,19 @@
 						this._popStack();
 						break;
 					case 'L':
-						if (this.remainingLife < 0) {
+						// if (this.remainingLife == this.adulthood) {
 							this.pen.color = '#004000';
-						}
-						else {
-							var r = parseInt(64 * (1 - this.remainingLife / this.adulthood));
-							var g = parseInt(16 + 48 * (this.remainingLife / this.adulthood));
-							this.pen.color = 'rgb(' + r + ',' + g + ',0)';
-						}
+						// }
+						// else {
+						// 	if (2 * this.remainingLife < this.adulthood) {
+						// 		this.pen.color = '#301000';
+						// 	}
+						// 	else {
+						// 		this.pen.color = '#202000';
+						// 	}
+							// var r = parseInt(64 * (1 - this.remainingLife / this.adulthood));
+							// var g = parseInt(16 + 48 * (this.remainingLife / this.adulthood));
+						// }
 						this._getParam();
 						break;
 					case 'A':
@@ -165,6 +170,16 @@
 					width: opts.pen.width
 				}
 			});
+		},
+		ageLeaves: function() {
+			for (var i = 0; i < this._sceneChildren.length; i++) {
+				if (2 * this.remainingLife < this.adulthood) {
+					this._sceneChildren[i].material.color.setHex(0x301000);
+				}
+				else {
+					this._sceneChildren[i].material.color.setHex(0x202000);
+				}
+			}
 		},
 		_storeLine: function(p1, p2) {
 			var key = this.pen.color + '_' + this.pen.width;

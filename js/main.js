@@ -163,12 +163,12 @@ function onLoad() {
 	});
 
 	//init with a lot of trees at the start
-	// while (env.trees.length < env.maxTrees) {
-	// 	console.log(env.trees.length);
-	// 	var turt = turtle.clone();
-	// 	env.addTree(hondas[parseInt(Math.random() * 4)], turt);
-	// 	env.update();
-	// }
+	while (env.trees.length < env.maxTrees) {
+		// console.log(env.trees.length);
+		var turt = turtle.clone();
+		env.addTree(hondas[parseInt(Math.random() * 4)], turt);
+		// env.update();
+	}
 
 	//forest
 	setInterval(function() {
